@@ -52,6 +52,11 @@ public class MovementScriptBlock : MonoBehaviour
                 transform.forward = inputMovement;
             }
 
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                _animator.Play("Armature|Throw");
+            }
+
 
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))

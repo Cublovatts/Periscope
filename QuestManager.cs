@@ -13,8 +13,8 @@ public class QuestManager : MonoBehaviour
     {
         // SETUP QUESTS IN HERE
         quests.Add(new Quest("Lord of the dance", new string [] { "Talk to the busker", "Collect your reward!" }));
-        quests.Add(new Quest("Pick up sticks", new string [] { "Talk to the park ranger", "Collect your reward!" }));
-        quests.Add(new Quest("Turn the tables", new string [] { "Talk to the waiter", "Collect your reward!" }));
+        quests.Add(new Quest("Pick up sticks", new string [] { "Talk to the park ranger", "Pick up those sticks", "Collect your reward!", "Quest complete" }));
+        quests.Add(new Quest("Turn the tables", new string [] { "Talk to the waiter", "Deliver food to tables", "Collect your reward!" , "Quest complete"}));
         quests.Add(new Quest("MOGGY", new string[] { "Talk to the cat lady", "Collect your reward!" }));
     }
 

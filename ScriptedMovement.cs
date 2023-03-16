@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class ScriptedMovement : MonoBehaviour
 {
     public MovementDestination[] destinations;
     [SerializeField] private float WALKING_SPEED = 3.0f;
+    [SerializeField] private bool isBlockable;
 
     private Animator _animator;
     private GameObject _player;
@@ -26,6 +24,14 @@ public class ScriptedMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float dist = Vector3.Distance(gameObject.transform.position, _player.transform.position);
+        if (isBlockable && dist < 5.0f)
+        {
+            _animator.SetBool("IsMoving", false);
+            return;
+        }
+        _animator.SetBool("IsMoving", true);
+
         currentDestination = destinations[destinationNumber];
 
         if (currentDestination.IsWarpDestination)

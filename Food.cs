@@ -21,7 +21,10 @@ public class Food : MonoBehaviour, ITrigger
         
     }
 
-
+    public void SetDeliverySpot()
+    {
+        Debug.Log("Setting delivery spot");
+    }
 
     public void Trigger()
     {
@@ -31,12 +34,12 @@ public class Food : MonoBehaviour, ITrigger
     IEnumerator DisappearFood()
     {
         movementScriptBlock.IsAvailable = false;
-        _playerAnimator.Play("PickUp");
+        _playerAnimator.Play("PickUpMid");
         yield return new WaitForSeconds(0.5f);
         _animator.SetBool("IsDisappearing", true);
         yield return new WaitForSeconds(0.5f);
         movementScriptBlock.IsAvailable = true;
         gameObject.SetActive(false);
-
+        SetDeliverySpot();
     }
 }
