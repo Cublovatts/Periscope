@@ -35,6 +35,12 @@ public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
             case 1:
                 _dialogueManager.StartDialogue(questInProgressDialogue, QuestInProgressDialogueUpdate);
                 break;
+            case 2: 
+                _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate); 
+                break;
+            case 3:
+                _dialogueManager.StartDialogue(fillerDialogue, FillerDialogueUpdate); 
+                break;
         }
     }
 
@@ -53,7 +59,7 @@ public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
     public void SucceededDialogueUpdate()
     {
         _questManager.SetQuestProgress("Turn the tables", 3);
-        interactionIndicator.SetAvailable(false);
+        interactionIndicator.SetAvailable(true);
         currencyCount.AddCurrency(5.00f);
     }
 

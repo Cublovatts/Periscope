@@ -1,17 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlateSpawner : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject foodPlate;
+    private RestaurantQuestManager restaurantQuestManager;
+
+    private void Start()
+    {
+        restaurantQuestManager = GameObject.Find("RestaurantQuestManager").GetComponent<RestaurantQuestManager>();
+    }
 
     public void SpawnPlate()
     {
-        // TODO: Select a new plate of food randomly from List of possible plates of food 
         // Place plate of food at plate spawner
-        GameObject newPlate = GameObject.Instantiate(foodPlate, gameObject.transform.parent);
+        GameObject foodOption = restaurantQuestManager.GetRandomFoodOption();
+        GameObject newPlate = GameObject.Instantiate(foodOption, gameObject.transform.parent);
         newPlate.transform.position = gameObject.transform.position;
     }
 

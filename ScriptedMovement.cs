@@ -25,7 +25,7 @@ public class ScriptedMovement : MonoBehaviour
     void Update()
     {
         float dist = Vector3.Distance(gameObject.transform.position, _player.transform.position);
-        if (isBlockable && dist < 5.0f)
+        if (isBlockable && dist < 3.0f)
         {
             _animator.SetBool("IsMoving", false);
             return;

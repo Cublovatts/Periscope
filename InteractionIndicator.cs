@@ -24,6 +24,13 @@ public class InteractionIndicator : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player");
         _trigger = triggerObject.GetComponent<ITrigger>();
         _indicatorAnimator = gameObject.GetComponent<Animator>();
+        if (isAvailable)
+        {
+            _indicatorAnimator.SetBool("IsAvailable", true);
+        } else
+        {
+            _indicatorAnimator.SetBool("IsAvailable", false);
+        }
     }
 
     // Update is called once per frame
