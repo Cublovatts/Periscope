@@ -40,11 +40,14 @@ public class QuestManager : MonoBehaviour
     {
         foreach (Quest quest in quests)
         {
-            if (quest.GetName() == questName) quest.SetProgress(progress);
+            if (quest.GetName() == questName)
+            {
+                quest.SetProgress(progress);
+                QuestUpdate?.Invoke(questName);
+                return;
+            }
         }
-
-        QuestUpdate?.Invoke(questName);
-
+        throw new System.Exception("Requested non existent quest: " + questName);
     }
 
     public string GetQuestCurrentProgressDescription(string questName)
@@ -53,15 +56,9 @@ public class QuestManager : MonoBehaviour
         {
             if (quest.GetName() == questName)
             {
-                try
-                {
-                    return quest.GetCurrentProgressDescription();
-                } catch(System.Exception e)
-                {
-                    return string.Empty;
-                }
+               return quest.GetCurrentProgressDescription();
             }
         }
-        return "No quest found";
+        throw new System.Exception("Requested non existent quest: " + questName);
     }
 }

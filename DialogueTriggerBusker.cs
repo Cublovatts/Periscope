@@ -21,25 +21,50 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
     [ContextMenu("TriggerDialogue")]
     public void TriggerDialogue()
     {
-        int buskerQuestProgress = _questManager.GetQuestProgress("Lord of the dance");
-        switch (buskerQuestProgress)
+        try
         {
-            case 0: _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
-                break;
-            case 1: _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate);
-                break;
+            int buskerQuestProgress = _questManager.GetQuestProgress("Lord of the dance");
+            switch (buskerQuestProgress)
+            {
+                case 0:
+                    _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
+                    break;
+                case 1:
+                    _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate);
+                    break;
+            }
+        } catch (Exception e) 
+        {
+            Debug.LogError(e);
+            Debug.LogError("Couldn't find quest");
         }
     }
 
     public void IntroDialogueUpdate()
     {
-        _questManager.SetQuestProgress("Lord of the dance", 1);
+        try
+        {
+            _questManager.SetQuestProgress("Lord of the dance", 1);
+        } catch(Exception e)
+        {
+            Debug.LogError(e);
+            Debug.LogError("Couldn't find quest");
+        }
+        
         interactionIndicator.SetAvailable(true);
     }
 
     public void SucceededDialogueUpdate()
     {
-        _questManager.SetQuestProgress("Lord of the dance", 2);
+        try
+        {
+            _questManager.SetQuestProgress("Lord of the dance", 2);
+        } catch (Exception e)
+        {
+            Debug.LogError(e);
+            Debug.LogError("Couldn't find quest");
+        }
+        
         interactionIndicator.SetAvailable(false);
         currencyCount.AddCurrency(5.0f);
     }

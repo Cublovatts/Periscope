@@ -18,7 +18,15 @@ public class RangerQuestTracker : MonoBehaviour
 
         if (sticksGotten == sticksToGet)
         {
-            _questManager.SetQuestProgress("Pick up sticks", 2);
+            try
+            {
+                _questManager.SetQuestProgress("Pick up sticks", 2);
+            } catch (System.Exception e) 
+            { 
+                Debug.LogError(e);
+                Debug.LogError("Couldn't find quest");
+            }
+            
         }
     }
 

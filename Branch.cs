@@ -24,13 +24,21 @@ public class Branch : MonoBehaviour, ITrigger
 
     public void Update()
     {
-        int questProgress = _questManager.GetQuestProgress("Pick up sticks");
-        if (questProgress == 1)
+        try
         {
-            interactionIndicator.SetAvailable(true);
-        } else
+            int questProgress = _questManager.GetQuestProgress("Pick up sticks");
+            if (questProgress == 1)
+            {
+                interactionIndicator.SetAvailable(true);
+            }
+            else
+            {
+                interactionIndicator.SetAvailable(false);
+            }
+        } catch (System.Exception e)
         {
-            interactionIndicator.SetAvailable(false);
+            Debug.LogError(e);
+            Debug.LogError("Couldn't find quest");
         }
     }
 

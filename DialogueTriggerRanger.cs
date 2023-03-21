@@ -21,27 +21,42 @@ public class DialogueTriggerRanger : MonoBehaviour, ITrigger
     [ContextMenu("TriggerDialogue")]
     public void TriggerDialogue()
     {
-        int rangerQuestProgress = _questManager.GetQuestProgress("Pick up sticks");
-        switch (rangerQuestProgress)
+        try
         {
-            case 0:
-                _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
-                break;
-            case 1:
-                _dialogueManager.StartDialogue(questInProgressDialogue, QuestInProgressUpdate);
-                break;
-            case 2:
-                _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate);
-                break;
-            case 3:
-                _dialogueManager.StartDialogue(fillerDialogue, FillerDialogueUpdate);
-                break;
+            int rangerQuestProgress = _questManager.GetQuestProgress("Pick up sticks");
+            switch (rangerQuestProgress)
+            {
+                case 0:
+                    _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
+                    break;
+                case 1:
+                    _dialogueManager.StartDialogue(questInProgressDialogue, QuestInProgressUpdate);
+                    break;
+                case 2:
+                    _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate);
+                    break;
+                case 3:
+                    _dialogueManager.StartDialogue(fillerDialogue, FillerDialogueUpdate);
+                    break;
+            }
+        } catch (System.Exception e)
+        {
+            Debug.LogError(e);
+            Debug.LogError("Couldn't find quest")
         }
+        
     }
 
     public void IntroDialogueUpdate()
     {
-        _questManager.SetQuestProgress("Pick up sticks", 1);
+        try
+        {
+            _questManager.SetQuestProgress("Pick up sticks", 1);
+        } catch (System.Exception e)
+        {
+            Debug.LogError(e);
+            Debug.LogError("Couldn't find quest");
+        }
         interactionIndicator.SetAvailable(true);
     }
 
@@ -52,7 +67,14 @@ public class DialogueTriggerRanger : MonoBehaviour, ITrigger
 
     public void SucceededDialogueUpdate()
     {
-        _questManager.SetQuestProgress("Pick up sticks", 3);
+        try
+        {
+            _questManager.SetQuestProgress("Pick up sticks", 3);
+        } catch (System.Exception e)
+        {
+            Debug.LogError(e);
+            Debug.LogError("Couldn't find quest");
+        }
         interactionIndicator.SetAvailable(true);
         currencyCount.AddCurrency(5.00f);
     }

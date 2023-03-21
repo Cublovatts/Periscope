@@ -32,7 +32,15 @@ public class RestaurantQuestManager : MonoBehaviour
             plateSpawner.SpawnPlate();
         } else
         {
-            questManager.SetQuestProgress("Turn the tables", 2);
+            try
+            {
+                questManager.SetQuestProgress("Turn the tables", 2);
+            } catch (System.Exception e)
+            {
+                Debug.LogError(e);
+                Debug.LogError("Couldn't find quest");
+            }
+            
         }
     }
 

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
@@ -23,27 +21,50 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
     [ContextMenu("TriggerDialogue")]
     public void TriggerDialogue()
     {
-        int catLadyQuestProgress = _questManager.GetQuestProgress("MOGGY");
-        switch (catLadyQuestProgress)
+        try
         {
-            case 0:
-                _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
-                break;
-            case 1:
-                _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate);
-                break;
+            int catLadyQuestProgress = _questManager.GetQuestProgress("MOGGY");
+            switch (catLadyQuestProgress)
+            {
+                case 0:
+                    _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
+                    break;
+                case 1:
+                    _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate);
+                    break;
+            }
+        } catch (System.Exception e)
+        {
+            Debug.LogError(e);
+            Debug.LogError("Couldn't find quest");
         }
+        
     }
 
     public void IntroDialogueUpdate()
     {
-        _questManager.SetQuestProgress("MOGGY", 1);
+        try
+        {
+            _questManager.SetQuestProgress("MOGGY", 1);
+        } catch (System.Exception e)
+        {
+            Debug.LogError(e);
+            Debug.LogError("Couldn't find quest");
+        }
         interactionIndicator.SetAvailable(true);
     }
 
     public void SucceededDialogueUpdate()
     {
-        _questManager.SetQuestProgress("MOGGY", 2);
+        try
+        {
+            _questManager.SetQuestProgress("MOGGY", 2);
+        } catch (System.Exception e)
+        {
+            Debug.LogError(e);
+            Debug.LogError("Couldn't find quest");
+        }
+         
         interactionIndicator.SetAvailable(false);
         currencyCount.AddCurrency(5.00f);
     }

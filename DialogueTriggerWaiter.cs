@@ -26,21 +26,28 @@ public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
     [ContextMenu("TriggerDialogue")]
     public void TriggerDialogue()
     {
-        int waiterQuestProgress = _questManager.GetQuestProgress("Turn the tables");
-        switch (waiterQuestProgress)
+        try
         {
-            case 0:
-                _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
-                break;
-            case 1:
-                _dialogueManager.StartDialogue(questInProgressDialogue, QuestInProgressDialogueUpdate);
-                break;
-            case 2: 
-                _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate); 
-                break;
-            case 3:
-                _dialogueManager.StartDialogue(fillerDialogue, FillerDialogueUpdate); 
-                break;
+            int waiterQuestProgress = _questManager.GetQuestProgress("Turn the tables");
+            switch (waiterQuestProgress)
+            {
+                case 0:
+                    _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
+                    break;
+                case 1:
+                    _dialogueManager.StartDialogue(questInProgressDialogue, QuestInProgressDialogueUpdate);
+                    break;
+                case 2:
+                    _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate);
+                    break;
+                case 3:
+                    _dialogueManager.StartDialogue(fillerDialogue, FillerDialogueUpdate);
+                    break;
+            }
+        } catch (System.Exception e) 
+        {
+            Debug.LogError(e);
+            Debug.LogError("Couldn't find quest");
         }
     }
 
