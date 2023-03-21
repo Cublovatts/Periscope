@@ -68,7 +68,7 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
         }
         
         interactionIndicator.SetAvailable(false);
-        currencyCount.AddCurrency(5.0f);
+        currencyCount.AddCurrency(5);
     }
 
     public void Trigger()

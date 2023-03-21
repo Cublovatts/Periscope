@@ -69,7 +69,7 @@ public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
     {
         _questManager.SetQuestProgress(RESTAURANT_QUEST_REF, 3);
         interactionIndicator.SetAvailable(true);
-        currencyCount.AddCurrency(5.00f);
+        currencyCount.AddCurrency(5);
     }
 
     public void FillerDialogueUpdate()

@@ -68,7 +68,7 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
         }
          
         interactionIndicator.SetAvailable(false);
-        currencyCount.AddCurrency(5.00f);
+        currencyCount.AddCurrency(5);
     }
 
     public void Trigger()

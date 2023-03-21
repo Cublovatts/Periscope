@@ -78,7 +78,7 @@ public class DialogueTriggerRanger : MonoBehaviour, ITrigger
             Debug.LogError("Couldn't find quest");
         }
         interactionIndicator.SetAvailable(true);
-        currencyCount.AddCurrency(5.00f);
+        currencyCount.AddCurrency(5);
     }
 
     public void FillerDialogueUpdate()

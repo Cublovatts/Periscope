@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class CurrencyCount : MonoBehaviour
 {
     private Text _text;
-    private float _totalCurrency;
+    private int _totalCurrency;
     private Animator _animator;
 
     // Start is called before the first frame update
@@ -21,7 +21,7 @@ public class CurrencyCount : MonoBehaviour
         _text.text = "$" + _totalCurrency.ToString();
     }
 
-    public void AddCurrency(float toAdd)
+    public void AddCurrency(int toAdd)
     {
         _totalCurrency += toAdd;
         StartCoroutine(ShowForTime(5.0f));
