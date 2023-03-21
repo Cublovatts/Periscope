@@ -25,4 +25,9 @@ public class Quest
     {
         currentProgress = progress;
     }
+
+    public string GetCurrentProgressDescription()
+    {
+        return questStepDescriptions[currentProgress];
+    }
 }

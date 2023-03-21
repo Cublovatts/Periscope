@@ -5,7 +5,7 @@ using UnityEngine;
 public class QuestManager : MonoBehaviour
 {
     public delegate void QuestUpdateDelegate(string questName);
-    public static event QuestUpdateDelegate QuestUpdate;
+    public event QuestUpdateDelegate QuestUpdate;
 
     List<Quest> quests = new List<Quest>();
 
@@ -42,5 +42,26 @@ public class QuestManager : MonoBehaviour
         {
             if (quest.GetName() == questName) quest.SetProgress(progress);
         }
+
+        QuestUpdate?.Invoke(questName);
+
+    }
+
+    public string GetQuestCurrentProgressDescription(string questName)
+    {
+        foreach (Quest quest in quests)
+        {
+            if (quest.GetName() == questName)
+            {
+                try
+                {
+                    return quest.GetCurrentProgressDescription();
+                } catch(System.Exception e)
+                {
+                    return string.Empty;
+                }
+            }
+        }
+        return "No quest found";
     }
 }
