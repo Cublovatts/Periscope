@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RestaurantQuestManager : MonoBehaviour
 {
+    static private QuestManager.QuestEnum RESTAURANT_QUEST_REF = QuestManager.QuestEnum.Turn_the_tables;
+
     [SerializeField]
     private int requiredDeliveries = 5;
     private int currentDeliveries = 0;
@@ -34,7 +34,7 @@ public class RestaurantQuestManager : MonoBehaviour
         {
             try
             {
-                questManager.SetQuestProgress("Turn the tables", 2);
+                questManager.SetQuestProgress(RESTAURANT_QUEST_REF, 2);
             } catch (System.Exception e)
             {
                 Debug.LogError(e);

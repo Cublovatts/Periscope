@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class DialogueTriggerBusker : MonoBehaviour, ITrigger
 {
+    static private QuestManager.QuestEnum BUSKER_QUEST_REF = QuestManager.QuestEnum.Lord_of_the_dance;
+
     public Dialogue introDialogue;
     public Dialogue succeededDialogue;
     public InteractionIndicator interactionIndicator;
@@ -23,7 +25,7 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
     {
         try
         {
-            int buskerQuestProgress = _questManager.GetQuestProgress("Lord of the dance");
+            int buskerQuestProgress = _questManager.GetQuestProgress(BUSKER_QUEST_REF);
             switch (buskerQuestProgress)
             {
                 case 0:
@@ -44,7 +46,7 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
     {
         try
         {
-            _questManager.SetQuestProgress("Lord of the dance", 1);
+            _questManager.SetQuestProgress(BUSKER_QUEST_REF, 1);
         } catch(Exception e)
         {
             Debug.LogError(e);
@@ -58,7 +60,7 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
     {
         try
         {
-            _questManager.SetQuestProgress("Lord of the dance", 2);
+            _questManager.SetQuestProgress(BUSKER_QUEST_REF, 2);
         } catch (Exception e)
         {
             Debug.LogError(e);

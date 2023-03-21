@@ -4,61 +4,78 @@ using UnityEngine;
 
 public class QuestManager : MonoBehaviour
 {
-    public delegate void QuestUpdateDelegate(string questName);
+    public delegate void QuestUpdateDelegate(QuestEnum questEnum);
     public event QuestUpdateDelegate QuestUpdate;
 
     List<Quest> quests = new List<Quest>();
 
+    public enum QuestEnum
+    {
+        Lord_of_the_dance,
+        Pick_up_sticks,
+        Turn_the_tables,
+        MOGGY
+    }
+
     private void Start()
     {
         // SETUP QUESTS IN HERE
-        quests.Add(new Quest("Lord of the dance", new string [] { "Talk to the busker", "Collect your reward!" }));
-        quests.Add(new Quest("Pick up sticks", new string [] { "Talk to the park ranger", "Pick up those sticks", "Collect your reward!", "Quest complete" }));
-        quests.Add(new Quest("Turn the tables", new string [] { "Talk to the waiter", "Deliver food to tables", "Collect your reward!" , "Quest complete"}));
-        quests.Add(new Quest("MOGGY", new string[] { "Talk to the cat lady", "Collect your reward!" }));
+        quests.Add(new Quest(QuestEnum.Lord_of_the_dance, "Lord of the dance", new string [] { "Talk to the busker", "Collect your reward!", "Quest complete" }));
+        quests.Add(new Quest(QuestEnum.Pick_up_sticks, "Pick up sticks", new string [] { "Talk to the park ranger", "Pick up those sticks", "Collect your reward!", "Quest complete" }));
+        quests.Add(new Quest(QuestEnum.Turn_the_tables, "Turn the tables", new string [] { "Talk to the waiter", "Deliver food to tables", "Collect your reward!" , "Quest complete"}));
+        quests.Add(new Quest(QuestEnum.MOGGY, "MOGGY", new string[] { "Talk to the cat lady", "Collect your reward!", "Quest complete" }));
     }
 
-    public Quest GetQuest(string questName)
+    public Quest GetQuest(QuestEnum questEnum)
     {
         foreach (Quest quest in quests)
         {
-            if (quest.GetName() == questName) return quest;
+            if (quest.GetQuestEnum() == questEnum) return quest;
         }
-        throw new System.Exception("Requested non existent quest: " + questName);
+        throw new System.Exception("Requested non existent quest: " + questEnum.ToString());
     }
 
-    public int GetQuestProgress(string questName)
+    public string GetQuestName(QuestEnum questEnum)
     {
         foreach (Quest quest in quests)
         {
-            if (quest.GetName() == questName) return quest.GetProgress();
+            if (quest.GetQuestEnum() == questEnum) return quest.GetName();
         }
-        throw new System.Exception("Requested non existent quest progress: " + questName);
+        throw new System.Exception("Requested non existent quest: " + questEnum.ToString());
     }
 
-    public void SetQuestProgress(string questName, int progress)
+    public int GetQuestProgress(QuestEnum questEnum)
     {
         foreach (Quest quest in quests)
         {
-            if (quest.GetName() == questName)
+            if (quest.GetQuestEnum() == questEnum) return quest.GetProgress();
+        }
+        throw new System.Exception("Requested non existent quest progress: " + questEnum.ToString());
+    }
+
+    public void SetQuestProgress(QuestEnum questEnum, int progress)
+    {
+        foreach (Quest quest in quests)
+        {
+            if (quest.GetQuestEnum() == questEnum)
             {
                 quest.SetProgress(progress);
-                QuestUpdate?.Invoke(questName);
+                QuestUpdate?.Invoke(questEnum);
                 return;
             }
         }
-        throw new System.Exception("Requested non existent quest: " + questName);
+        throw new System.Exception("Requested non existent quest: " + questEnum.ToString());
     }
 
-    public string GetQuestCurrentProgressDescription(string questName)
+    public string GetQuestCurrentProgressDescription(QuestEnum questEnum)
     {
         foreach (Quest quest in quests)
         {
-            if (quest.GetName() == questName)
+            if (quest.GetQuestEnum() == questEnum)
             {
                return quest.GetCurrentProgressDescription();
             }
         }
-        throw new System.Exception("Requested non existent quest: " + questName);
+        throw new System.Exception("Requested non existent quest: " + questEnum.ToString());
     }
 }

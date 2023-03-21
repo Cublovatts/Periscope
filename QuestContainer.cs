@@ -18,6 +18,7 @@ public class QuestContainer : MonoBehaviour
     private Text _descriptionText;
     private Image _checkboxImage;
 
+    private QuestManager.QuestEnum _questEnum;
     private string _referenceTitle;
 
     public void InstaniateQuestContainer()
@@ -33,6 +34,16 @@ public class QuestContainer : MonoBehaviour
     public string GetTitle()
     {
         return _referenceTitle;
+    }
+
+    public void SetQuestEnum(QuestManager.QuestEnum questEnum)
+    {
+        _questEnum = questEnum;
+    }
+
+    public QuestManager.QuestEnum GetQuestEnum()
+    {
+        return _questEnum;
     }
 
     public void SetTitle(string title)

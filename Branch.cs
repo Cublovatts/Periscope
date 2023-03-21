@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Branch : MonoBehaviour, ITrigger
 {
+    static private QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
+
     public InteractionIndicator interactionIndicator;
 
     private RangerQuestTracker _rangerQuestTracker;
@@ -26,7 +28,7 @@ public class Branch : MonoBehaviour, ITrigger
     {
         try
         {
-            int questProgress = _questManager.GetQuestProgress("Pick up sticks");
+            int questProgress = _questManager.GetQuestProgress(RANGER_QUEST_REF);
             if (questProgress == 1)
             {
                 interactionIndicator.SetAvailable(true);

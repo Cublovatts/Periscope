@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class DialogueTriggerRanger : MonoBehaviour, ITrigger
 {
+    static private QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
+
     public Dialogue introDialogue;
     public Dialogue questInProgressDialogue;
     public Dialogue succeededDialogue;
@@ -23,7 +25,7 @@ public class DialogueTriggerRanger : MonoBehaviour, ITrigger
     {
         try
         {
-            int rangerQuestProgress = _questManager.GetQuestProgress("Pick up sticks");
+            int rangerQuestProgress = _questManager.GetQuestProgress(RANGER_QUEST_REF);
             switch (rangerQuestProgress)
             {
                 case 0:
@@ -42,7 +44,7 @@ public class DialogueTriggerRanger : MonoBehaviour, ITrigger
         } catch (System.Exception e)
         {
             Debug.LogError(e);
-            Debug.LogError("Couldn't find quest")
+            Debug.LogError("Couldn't find quest");
         }
         
     }
@@ -51,7 +53,7 @@ public class DialogueTriggerRanger : MonoBehaviour, ITrigger
     {
         try
         {
-            _questManager.SetQuestProgress("Pick up sticks", 1);
+            _questManager.SetQuestProgress(RANGER_QUEST_REF, 1);
         } catch (System.Exception e)
         {
             Debug.LogError(e);
@@ -69,7 +71,7 @@ public class DialogueTriggerRanger : MonoBehaviour, ITrigger
     {
         try
         {
-            _questManager.SetQuestProgress("Pick up sticks", 3);
+            _questManager.SetQuestProgress(RANGER_QUEST_REF, 3);
         } catch (System.Exception e)
         {
             Debug.LogError(e);

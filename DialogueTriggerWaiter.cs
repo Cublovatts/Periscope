@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
 {
+    static private QuestManager.QuestEnum RESTAURANT_QUEST_REF = QuestManager.QuestEnum.Turn_the_tables;
+
     public Dialogue introDialogue;
     public Dialogue questInProgressDialogue;
     public Dialogue succeededDialogue;
@@ -28,7 +30,7 @@ public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
     {
         try
         {
-            int waiterQuestProgress = _questManager.GetQuestProgress("Turn the tables");
+            int waiterQuestProgress = _questManager.GetQuestProgress(RESTAURANT_QUEST_REF);
             switch (waiterQuestProgress)
             {
                 case 0:
@@ -53,7 +55,7 @@ public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
 
     public void IntroDialogueUpdate()
     {
-        _questManager.SetQuestProgress("Turn the tables", 1);
+        _questManager.SetQuestProgress(RESTAURANT_QUEST_REF, 1);
         interactionIndicator.SetAvailable(true);
         _spawner.SpawnPlate();
     }
@@ -65,7 +67,7 @@ public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
 
     public void SucceededDialogueUpdate()
     {
-        _questManager.SetQuestProgress("Turn the tables", 3);
+        _questManager.SetQuestProgress(RESTAURANT_QUEST_REF, 3);
         interactionIndicator.SetAvailable(true);
         currencyCount.AddCurrency(5.00f);
     }

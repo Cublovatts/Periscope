@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
 {
+    static private QuestManager.QuestEnum CAT_QUEST_REF = QuestManager.QuestEnum.MOGGY;
+
     public Dialogue introDialogue;
     public Dialogue succeededDialogue;
     public InteractionIndicator interactionIndicator;
@@ -23,7 +25,7 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
     {
         try
         {
-            int catLadyQuestProgress = _questManager.GetQuestProgress("MOGGY");
+            int catLadyQuestProgress = _questManager.GetQuestProgress(CAT_QUEST_REF);
             switch (catLadyQuestProgress)
             {
                 case 0:
@@ -45,7 +47,7 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
     {
         try
         {
-            _questManager.SetQuestProgress("MOGGY", 1);
+            _questManager.SetQuestProgress(CAT_QUEST_REF, 1);
         } catch (System.Exception e)
         {
             Debug.LogError(e);
@@ -58,7 +60,7 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
     {
         try
         {
-            _questManager.SetQuestProgress("MOGGY", 2);
+            _questManager.SetQuestProgress(CAT_QUEST_REF, 2);
         } catch (System.Exception e)
         {
             Debug.LogError(e);
