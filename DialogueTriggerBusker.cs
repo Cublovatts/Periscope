@@ -3,10 +3,14 @@ using UnityEngine;
 
 public class DialogueTriggerBusker : MonoBehaviour, ITrigger
 {
+    [SerializeField]
+    private Animator _buskerAnimator;
+
     static private QuestManager.QuestEnum BUSKER_QUEST_REF = QuestManager.QuestEnum.Lord_of_the_dance;
 
     public Dialogue introDialogue;
     public Dialogue succeededDialogue;
+    public Dialogue fillerDialogue;
     public InteractionIndicator interactionIndicator;
     public CurrencyCount currencyCount;
 
@@ -31,8 +35,11 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
                 case 0:
                     _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
                     break;
-                case 1:
+                case 2:
                     _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate);
+                    break;
+                case 3:
+                    _dialogueManager.StartDialogue(fillerDialogue, FillerDialogueUpdate);
                     break;
             }
         } catch (Exception e) 
@@ -53,26 +60,35 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
             Debug.LogError("Couldn't find quest");
         }
         
-        interactionIndicator.SetAvailable(true);
+        interactionIndicator.SetAvailable(false);
+        _buskerAnimator.SetBool("IsDrumming", true);
     }
 
     public void SucceededDialogueUpdate()
     {
         try
         {
-            _questManager.SetQuestProgress(BUSKER_QUEST_REF, 2);
+            _questManager.SetQuestProgress(BUSKER_QUEST_REF, 3);
         } catch (Exception e)
         {
             Debug.LogError(e);
             Debug.LogError("Couldn't find quest");
         }
         
-        interactionIndicator.SetAvailable(false);
+        interactionIndicator.SetAvailable(true);
         currencyCount.AddCurrency(5);
+        _buskerAnimator.SetBool("IsDrumming", true);
+    }
+
+    public void FillerDialogueUpdate()
+    {
+        interactionIndicator.SetAvailable(true);
+        _buskerAnimator.SetBool("IsDrumming", true);
     }
 
     public void Trigger()
     {
+        _buskerAnimator.SetBool("IsDrumming", false);
         TriggerDialogue();
     }
 }

@@ -47,7 +47,6 @@ public class InteractionIndicator : MonoBehaviour
             // Show subtle convo prompt
             if (!isIndicatorSubtle)
             {
-                Debug.Log("Shrinking indicator");
                 isIndicatorSubtle = true;
                 _indicatorAnimator.SetBool("IsIndicatorSubtle", true);
             }
@@ -57,7 +56,6 @@ public class InteractionIndicator : MonoBehaviour
             // Show convo prompt
             if (isIndicatorSubtle)
             {
-                Debug.Log("Growing indicator");
                 isIndicatorSubtle = false;
                 _indicatorAnimator.SetBool("IsIndicatorSubtle", false);
             }
