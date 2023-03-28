@@ -7,7 +7,6 @@ public class QuestTrackerUI : MonoBehaviour
     [SerializeField]
     private GameObject questContainer;
 
-    static private string[] questTitles = { "Lord of the dance", "Pick up sticks" , "Turn the tables" , "MOGGY" };
     static private QuestManager.QuestEnum[] questEnums = {
         QuestManager.QuestEnum.Lord_of_the_dance,
         QuestManager.QuestEnum.Pick_up_sticks,
@@ -19,7 +18,7 @@ public class QuestTrackerUI : MonoBehaviour
 
     private QuestManager _questManager;
 
-    private float lastActivated;
+    private float lastActivated = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +45,7 @@ public class QuestTrackerUI : MonoBehaviour
             questContainers.Add(questContainerComponent);
             targetHeight += offset;
         }
+        HideQuestTrackers();
     }
 
     // Update is called once per frame

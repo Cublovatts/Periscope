@@ -15,6 +15,7 @@ public class InteractionIndicator : MonoBehaviour
     private Vector3 indicatorOffset;
     private bool isIndicatorSubtle = true;
     public bool isAvailable = true;
+    public bool isShowing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,38 +37,41 @@ public class InteractionIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Update element position
-        Vector3 screenPos = _camera.WorldToScreenPoint(indicatorTargetObject.transform.position);
-        screenPos += indicatorOffset;
-        _interactionIndicatorTransform.SetPositionAndRotation(screenPos, rotation: Quaternion.identity);
-
-        float dist = Vector3.Distance(indicatorTargetObject.transform.position, _player.transform.position);
-        if (dist > 5.0f)
+        if (isShowing)
         {
-            // Show subtle convo prompt
-            if (!isIndicatorSubtle)
-            {
-                isIndicatorSubtle = true;
-                _indicatorAnimator.SetBool("IsIndicatorSubtle", true);
-            }
-        }
-        if (dist < 5.0f)
-        {
-            // Show convo prompt
-            if (isIndicatorSubtle)
-            {
-                isIndicatorSubtle = false;
-                _indicatorAnimator.SetBool("IsIndicatorSubtle", false);
-            }
+            // Update element position
+            Vector3 screenPos = _camera.WorldToScreenPoint(indicatorTargetObject.transform.position);
+            screenPos += indicatorOffset;
+            _interactionIndicatorTransform.SetPositionAndRotation(screenPos, rotation: Quaternion.identity);
 
-            if (Input.GetKeyDown(KeyCode.E) && isAvailable)
+            float dist = Vector3.Distance(indicatorTargetObject.transform.position, _player.transform.position);
+            if (dist > 5.0f)
             {
-                // Trigger action
-                _trigger.Trigger();
-                isAvailable = false;
-                _indicatorAnimator.SetBool("IsAvailable", false);
+                // Show subtle convo prompt
+                if (!isIndicatorSubtle)
+                {
+                    isIndicatorSubtle = true;
+                    _indicatorAnimator.SetBool("IsIndicatorSubtle", true);
+                }
             }
+            if (dist < 5.0f)
+            {
+                // Show convo prompt
+                if (isIndicatorSubtle)
+                {
+                    isIndicatorSubtle = false;
+                    _indicatorAnimator.SetBool("IsIndicatorSubtle", false);
+                }
 
+                if (Input.GetKeyDown(KeyCode.E) && isAvailable)
+                {
+                    // Trigger action
+                    _trigger.Trigger();
+                    isAvailable = false;
+                    _indicatorAnimator.SetBool("IsAvailable", false);
+                }
+
+            }
         }
     }
 
