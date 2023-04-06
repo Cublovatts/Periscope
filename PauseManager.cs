@@ -83,7 +83,7 @@ public class PauseManager : MonoBehaviour
         // hide all interaction indicators
         foreach(InteractionIndicator indicator in _interactionIndicators) 
         {
-            indicator.isShowing = false;
+            indicator.gameObject.SetActive(false);
         }
 
         // reveal pause elements
@@ -108,10 +108,15 @@ public class PauseManager : MonoBehaviour
         // hide all interaction indicators
         foreach (InteractionIndicator indicator in _interactionIndicators)
         {
-            indicator.isShowing = true;
+            indicator.gameObject.SetActive(true);
         }
 
         // hide pause elements
         _pauseCanvas.SetActive(false);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

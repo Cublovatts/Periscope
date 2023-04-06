@@ -37,8 +37,8 @@ public class InteractionIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isShowing)
-        {
+        //if (isShowing)
+        //{
             // Update element position
             Vector3 screenPos = _camera.WorldToScreenPoint(indicatorTargetObject.transform.position);
             screenPos += indicatorOffset;
@@ -72,7 +72,7 @@ public class InteractionIndicator : MonoBehaviour
                 }
 
             }
-        }
+       // }
     }
 
     public void SetAvailable(bool available)

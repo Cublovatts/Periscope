@@ -78,4 +78,10 @@ public class QuestManager : MonoBehaviour
         }
         throw new System.Exception("Requested non existent quest: " + questEnum.ToString());
     }
+
+    [ContextMenu("DebugBusker")]
+    public void DebugGetBuskerQuestProgress()
+    {
+        Debug.Log("Busker: " + GetQuestProgress(QuestEnum.Lord_of_the_dance));
+    }
 }
