@@ -17,11 +17,15 @@ public class GuitarHero : MonoBehaviour, ITrigger
     private GameObject finishPosition;
 
     private QuestManager _questManager;
+    private SliderScript _slider;
     private Animator _playerAnimator;
     private GameObject _player;
     private Rigidbody _playerRigidbody;
     private MovementScriptBlock _movement;
     private Image[] _guitarHeroUI;
+    private MusicManager _musicManager;
+    private AudioSource _audioSource;
+    private InteractionIndicator _buskerInteraction;
 
     private bool onDrums = false;
 
@@ -33,6 +37,10 @@ public class GuitarHero : MonoBehaviour, ITrigger
         _playerAnimator = _player.GetComponent<Animator>();
         _movement = _player.GetComponent<MovementScriptBlock>();
         _guitarHeroUI = GameObject.FindGameObjectsWithTag("GuitarHeroUI").Select(x => x.GetComponent<Image>()).ToArray();
+        _slider = gameObject.GetComponentInChildren<SliderScript>();
+        _musicManager = GameObject.Find("MusicManager").GetComponent<MusicManager>();
+        _audioSource = gameObject.GetComponent<AudioSource>();
+        _buskerInteraction = GameObject.Find("Busker").GetComponentInChildren<InteractionIndicator>();
     }
 
     // Update is called once per frame
@@ -80,6 +88,7 @@ public class GuitarHero : MonoBehaviour, ITrigger
 
     public IEnumerator PlayGuitarHero()
     {
+        // STARTING GUITAR HERO
         // Reveal guitar hero UI elements
         foreach(Image element in _guitarHeroUI)
         {
@@ -88,7 +97,15 @@ public class GuitarHero : MonoBehaviour, ITrigger
             element.color = color;
         }
 
-        yield return new WaitForSeconds(5);
+        // Turn down music, turn up guitar hero song
+        _musicManager.SetMinVolume();
+        _audioSource.Play();
+
+        _slider.SetPlaying(true);
+
+        yield return new WaitForSeconds(30);
+
+        // FINISHING GUITAR HERO
 
         foreach (Image element in _guitarHeroUI)
         {
@@ -96,6 +113,13 @@ public class GuitarHero : MonoBehaviour, ITrigger
             color.a = 0;
             element.color = color;
         }
+
+        _buskerInteraction.SetAvailable(true);
+
+        _musicManager.SetMaxVolume();
+        _audioSource.Pause();
+
+        _slider.SetPlaying(false);
 
         onDrums = false;
         _player.transform.position = new Vector3(finishPosition.transform.position.x,
@@ -105,5 +129,7 @@ public class GuitarHero : MonoBehaviour, ITrigger
         _playerAnimator.SetBool("IsDrumming", false);
         _movement.IsAvailable = true;
         _playerRigidbody.velocity = Vector3.zero;
+
+        _questManager.SetQuestProgress(QuestManager.QuestEnum.Lord_of_the_dance, 2);
     }
 }

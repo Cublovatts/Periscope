@@ -6,6 +6,8 @@ public class MusicManager : MonoBehaviour
     private AudioClip[] tracks;
     [SerializeField]
     private float secondsBetween;
+    [SerializeField]
+    private float maxVolume;
 
     private AudioSource _audioSource;
     private float lastTrackStarted = 0;
@@ -33,5 +35,15 @@ public class MusicManager : MonoBehaviour
                 currentTrack = 0;
             }
         }
+    }
+
+    public void SetMaxVolume()
+    {
+        _audioSource.volume = maxVolume;
+    }
+
+    public void SetMinVolume()
+    {
+        _audioSource.volume = 0;
     }
 }
