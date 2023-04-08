@@ -37,42 +37,40 @@ public class InteractionIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (isShowing)
-        //{
-            // Update element position
-            Vector3 screenPos = _camera.WorldToScreenPoint(indicatorTargetObject.transform.position);
-            screenPos += indicatorOffset;
-            _interactionIndicatorTransform.SetPositionAndRotation(screenPos, rotation: Quaternion.identity);
+        Vector3 screenPos = _camera.WorldToScreenPoint(indicatorTargetObject.transform.position);
+        screenPos += indicatorOffset;
+        _interactionIndicatorTransform.SetPositionAndRotation(screenPos, rotation: Quaternion.identity);
 
-            float dist = Vector3.Distance(indicatorTargetObject.transform.position, _player.transform.position);
-            if (dist > 5.0f)
+        SetAvailable(isAvailable);
+
+        float dist = Vector3.Distance(indicatorTargetObject.transform.position, _player.transform.position);
+        if (dist > 5.0f)
+        {
+            // Show subtle convo prompt
+            if (!isIndicatorSubtle)
             {
-                // Show subtle convo prompt
-                if (!isIndicatorSubtle)
-                {
-                    isIndicatorSubtle = true;
-                    _indicatorAnimator.SetBool("IsIndicatorSubtle", true);
-                }
+                isIndicatorSubtle = true;
+                _indicatorAnimator.SetBool("IsIndicatorSubtle", true);
             }
-            if (dist < 5.0f)
+        }
+        if (dist < 5.0f)
+        {
+            // Show convo prompt
+            if (isIndicatorSubtle)
             {
-                // Show convo prompt
-                if (isIndicatorSubtle)
-                {
-                    isIndicatorSubtle = false;
-                    _indicatorAnimator.SetBool("IsIndicatorSubtle", false);
-                }
-
-                if (Input.GetKeyDown(KeyCode.E) && isAvailable)
-                {
-                    // Trigger action
-                    _trigger.Trigger();
-                    isAvailable = false;
-                    _indicatorAnimator.SetBool("IsAvailable", false);
-                }
-
+                isIndicatorSubtle = false;
+                _indicatorAnimator.SetBool("IsIndicatorSubtle", false);
             }
-       // }
+
+            if (Input.GetKeyDown(KeyCode.E) && isAvailable)
+            {
+                // Trigger action
+                _trigger.Trigger();
+                isAvailable = false;
+                _indicatorAnimator.SetBool("IsAvailable", false);
+            }
+
+        }
     }
 
     public void SetAvailable(bool available)
