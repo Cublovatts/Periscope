@@ -10,10 +10,17 @@ public class SliderNode : MonoBehaviour
     private GameObject _middleBar;
     private Image _nodeImage;
 
+    private float resolutionDistanceFactor;
+    private float inPlayDistance;
+    private float passDistance;
+
     void Start()
     {
         _middleBar = GameObject.Find("MiddleBar");
         _nodeImage = gameObject.GetComponent<Image>();
+        resolutionDistanceFactor = Screen.height / 1080f;
+        inPlayDistance = 200f * resolutionDistanceFactor;
+        passDistance = 100f * resolutionDistanceFactor;
     }
 
     // Update is called once per frame
@@ -22,15 +29,15 @@ public class SliderNode : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A) && !isSet) {
             // Check proximity
             float distance = Vector2.Distance(transform.position, _middleBar.transform.position);
-            if (distance < 200 && distance > 100)
+            if (distance < inPlayDistance && distance > passDistance)
             {
                 setToFail();
             }
-            if (distance < 100 && isLeftNode)
+            if (distance < passDistance && isLeftNode)
             {
                 setToPass();
             }
-            if (distance < 100 && !isLeftNode)
+            if (distance < passDistance && !isLeftNode)
             {
                 setToFail();
             }
@@ -39,15 +46,15 @@ public class SliderNode : MonoBehaviour
         {
             // Check proximity
             float distance = Vector2.Distance(transform.position, _middleBar.transform.position);
-            if (distance < 200 && distance > 100)
+            if (distance < inPlayDistance && distance > passDistance)
             {
                 setToFail();
             }
-            if (distance < 100 && !isLeftNode)
+            if (distance < passDistance && !isLeftNode)
             {
                 setToPass();
             }
-            if (distance < 100 && isLeftNode)
+            if (distance < passDistance && isLeftNode)
             {
                 setToFail();
             }
