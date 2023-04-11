@@ -23,7 +23,7 @@ public class QuestManager : MonoBehaviour
         quests.Add(new Quest(QuestEnum.Lord_of_the_dance, "Lord of the dance", new string [] { "Talk to the busker", "Jump on the drum box", "Collect your reward!", "Quest complete" }));
         quests.Add(new Quest(QuestEnum.Pick_up_sticks, "Pick up sticks", new string [] { "Talk to the park ranger", "Pick up those sticks", "Collect your reward!", "Quest complete" }));
         quests.Add(new Quest(QuestEnum.Turn_the_tables, "Turn the tables", new string [] { "Talk to the waiter", "Deliver food to tables", "Collect your reward!" , "Quest complete"}));
-        quests.Add(new Quest(QuestEnum.MOGGY, "MOGGY", new string[] { "Talk to the cat lady", "Collect your reward!", "Quest complete" }));
+        quests.Add(new Quest(QuestEnum.MOGGY, "MOGGY", new string[] { "Talk to the cat lady", "Find the old lady's cat", "Collect your reward!", "Quest complete" }));
     }
 
     public Quest GetQuest(QuestEnum questEnum)

@@ -130,6 +130,14 @@ public class GuitarHero : MonoBehaviour, ITrigger
         _movement.IsAvailable = true;
         _playerRigidbody.velocity = Vector3.zero;
 
-        _questManager.SetQuestProgress(QuestManager.QuestEnum.Lord_of_the_dance, 2);
+        try
+        {
+            _questManager.SetQuestProgress(BUSKER_QUEST_REF, 2);
+        } catch (System.Exception e)
+        {
+            Debug.LogError(e);
+            Debug.LogError("Couldn't find quest");
+        }
+        
     }
 }

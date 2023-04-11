@@ -34,7 +34,13 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
                     _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
                     break;
                 case 1:
+                    _dialogueManager.StartDialogue(inProgressDialogue, InProgressDialogueUpdate);
+                    break;
+                case 2:
                     _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate);
+                    break;
+                case 3:
+                    _dialogueManager.StartDialogue(fillerDialogue, FillerDialogueUpdate);
                     break;
             }
         } catch (System.Exception e)
@@ -62,15 +68,25 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
     {
         try
         {
-            _questManager.SetQuestProgress(CAT_QUEST_REF, 2);
+            _questManager.SetQuestProgress(CAT_QUEST_REF, 3);
         } catch (System.Exception e)
         {
             Debug.LogError(e);
             Debug.LogError("Couldn't find quest");
         }
          
-        interactionIndicator.SetAvailable(false);
+        interactionIndicator.SetAvailable(true);
         currencyCount.AddCurrency(5);
+    }
+
+    public void InProgressDialogueUpdate()
+    {
+        interactionIndicator.SetAvailable(true);
+    }
+
+    public void FillerDialogueUpdate()
+    {
+        interactionIndicator.SetAvailable(true);
     }
 
     public void Trigger()
