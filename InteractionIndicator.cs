@@ -37,8 +37,8 @@ public class InteractionIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 screenPos = _camera.WorldToScreenPoint(indicatorTargetObject.transform.position);
-        screenPos += indicatorOffset;
+        Vector3 screenPos = _camera.WorldToScreenPoint(indicatorTargetObject.transform.position + indicatorOffset);
+        //screenPos += indicatorOffset;
         _interactionIndicatorTransform.SetPositionAndRotation(screenPos, rotation: Quaternion.identity);
 
         SetAvailable(isAvailable);
