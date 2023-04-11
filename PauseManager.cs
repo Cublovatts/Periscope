@@ -5,6 +5,8 @@ using UnityEngine.Rendering.Universal;
 public class PauseManager : MonoBehaviour
 {
     public VolumeProfile mVolumeProfile;
+    public delegate void OnUnpause();
+    public static event OnUnpause onUnpause;
 
     static private float playCameraSize = 12f;
     static private float pauseCameraSize = 50f;
@@ -113,6 +115,16 @@ public class PauseManager : MonoBehaviour
 
         // hide pause elements
         _pauseCanvas.SetActive(false);
+
+        if (onUnpause != null)
+        {
+            onUnpause.Invoke();
+        }
+    }
+
+    public bool GetPaused()
+    {
+        return isPaused;
     }
 
     public void ExitGame()
