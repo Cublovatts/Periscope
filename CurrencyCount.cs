@@ -45,4 +45,15 @@ public class CurrencyCount : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         HideText();
     }
+
+    public int GetCurrency()
+    {
+        return _totalCurrency;
+    }
+
+    [ContextMenu("AddCurrency5")]
+    public void AddCurrency5()
+    {
+        AddCurrency(5);
+    }
 }
