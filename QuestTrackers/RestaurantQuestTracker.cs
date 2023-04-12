@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RestaurantQuestManager : MonoBehaviour
+public class RestaurantQuestTracker : MonoBehaviour
 {
     static private QuestManager.QuestEnum RESTAURANT_QUEST_REF = QuestManager.QuestEnum.Turn_the_tables;
 
@@ -25,10 +25,8 @@ public class RestaurantQuestManager : MonoBehaviour
     public void IncrementDeliveries(int count)
     {
         currentDeliveries += count;
-        Debug.Log("Incrementing deliveries: " + currentDeliveries);
         if (currentDeliveries < requiredDeliveries)
         {
-            Debug.Log("Spawning plate");
             plateSpawner.SpawnPlate();
         } else
         {

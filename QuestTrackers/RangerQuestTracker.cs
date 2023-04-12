@@ -4,9 +4,10 @@ public class RangerQuestTracker : MonoBehaviour
 {
     static private QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
 
+    private QuestManager _questManager;
+
     private int sticksToGet = 8;
     private int sticksGotten = 0;
-    private QuestManager _questManager;
 
     private void Start()
     {

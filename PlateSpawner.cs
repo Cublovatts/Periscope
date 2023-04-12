@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class PlateSpawner : MonoBehaviour
 {
-    private RestaurantQuestManager restaurantQuestManager;
+    private RestaurantQuestTracker _restaurantQuestTracker;
 
     private void Start()
     {
-        restaurantQuestManager = GameObject.Find("RestaurantQuestManager").GetComponent<RestaurantQuestManager>();
+        _restaurantQuestTracker = GameObject.Find("RestaurantQuestManager").GetComponent<RestaurantQuestTracker>();
     }
 
     public void SpawnPlate()
     {
         // Place plate of food at plate spawner
-        GameObject foodOption = restaurantQuestManager.GetRandomFoodOption();
-        GameObject newPlate = GameObject.Instantiate(foodOption, gameObject.transform.parent);
+        GameObject foodOption = _restaurantQuestTracker.GetRandomFoodOption();
+        GameObject newPlate = Instantiate(foodOption, gameObject.transform.parent);
         newPlate.transform.position = gameObject.transform.position;
     }
 
