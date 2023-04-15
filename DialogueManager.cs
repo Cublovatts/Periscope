@@ -18,6 +18,9 @@ public class DialogueManager : MonoBehaviour
 
     public Animator animator;
 
+    private bool sentenceFinished = false;
+    private string currentLine;
+
     void Start()
     {
         movementScriptBlock = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScriptBlock>();
@@ -27,9 +30,14 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D) && animator.GetBool("IsShowing"))
+        if (Input.GetKeyDown(KeyCode.E) && animator.GetBool("IsShowing") && sentenceFinished)
         {
+            sentenceFinished = false;
             DisplayNextSentence();
+        }
+        else if (Input.GetKeyDown(KeyCode.E) && animator.GetBool("IsShowing") && !sentenceFinished)
+        {
+            FinishSentence();
         }
     }
 
@@ -59,14 +67,17 @@ public class DialogueManager : MonoBehaviour
             EndDialogue();
             return;
         }
-
+ 
         string line = dialogueQueue.Dequeue();
+        currentLine = line;
+
         StopAllCoroutines();
         StartCoroutine(TypeSentence(line));
     }
 
     IEnumerator TypeSentence(string line)
     {
+        sentenceFinished = false;
         displayLine.text = "";
         foreach (char letter in line.ToCharArray())
         {
@@ -74,16 +85,30 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
             _audioSource.Play();
         }
+        sentenceFinished = true;
     }
 
     public void EndDialogue()
     {
         animator.SetBool("IsShowing", false);
-        if (currentCallback!= null)
+        movementScriptBlock.IsAvailable = true;
+        StopAllCoroutines();
+        StartCoroutine(DelayedCallback());
+    }
+
+    IEnumerator DelayedCallback()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (currentCallback != null)
         {
             currentCallback();
         }
-        movementScriptBlock.IsAvailable = true;
-        StopAllCoroutines();
+    }
+
+    public void FinishSentence()
+    {
+        StopAllCoroutines(); 
+        displayLine.text = currentLine;
+        sentenceFinished = true;
     }
 }

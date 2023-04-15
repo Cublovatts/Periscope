@@ -11,6 +11,7 @@ public class MovementScriptBlock : MonoBehaviour
 
     private Animator _animator;
     private bool IsShifting = false;
+    private float rotationAngle = -45f;
 
     public bool IsAvailable = true;
 
@@ -36,7 +37,7 @@ public class MovementScriptBlock : MonoBehaviour
                 IsShifting = false;
             }
 
-            Vector3 inputMovement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            Vector3 inputMovement = Quaternion.Euler(0, rotationAngle, 0) * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             if (IsShifting)
             {
                 transform.Translate(inputMovement * Time.deltaTime * RUNNING_SPEED, Space.World);
@@ -50,14 +51,8 @@ public class MovementScriptBlock : MonoBehaviour
             if (inputMovement != Vector3.zero)
             {
                 transform.forward = inputMovement;
+                //transform.rotation = Quaternion.Euler(0, -rotationAngle, 0) * Quaternion.LookRotation(inputMovement);
             }
-
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                _animator.Play("Armature|Throw");
-            }
-
-
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
