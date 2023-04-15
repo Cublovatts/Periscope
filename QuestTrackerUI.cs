@@ -19,6 +19,7 @@ public class QuestTrackerUI : MonoBehaviour
     private QuestManager _questManager;
 
     private float lastActivated = 0;
+    private bool isShowing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -52,9 +53,13 @@ public class QuestTrackerUI : MonoBehaviour
     void Update()
     {
         // Show when a button is pressed
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && !isShowing)
         {
             ShowQuestTrackers();
+        } 
+        else if (Input.GetKeyDown(KeyCode.Tab) && isShowing)
+        {
+            HideQuestTrackers();
         }
 
         // Disappear if has been showing for 10 seconds
@@ -82,6 +87,7 @@ public class QuestTrackerUI : MonoBehaviour
         {
             container.Hide();
         }
+        isShowing = false;
     }
 
     public void ShowQuestTrackers()
@@ -91,5 +97,6 @@ public class QuestTrackerUI : MonoBehaviour
         {
             container.Show();
         }
+        isShowing = true;
     }
 }

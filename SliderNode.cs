@@ -18,14 +18,15 @@ public class SliderNode : MonoBehaviour
     {
         _middleBar = GameObject.Find("MiddleBar");
         _nodeImage = gameObject.GetComponent<Image>();
-        resolutionDistanceFactor = Screen.height / 1080f;
-        inPlayDistance = 200f * resolutionDistanceFactor;
-        passDistance = 100f * resolutionDistanceFactor;
     }
 
     // Update is called once per frame
     void Update()
     {
+        resolutionDistanceFactor = Screen.height / 1080f;
+        inPlayDistance = 200f * resolutionDistanceFactor;
+        passDistance = 100f * resolutionDistanceFactor;
+
         if (Input.GetKeyDown(KeyCode.A) && !isSet) {
             // Check proximity
             float distance = Vector2.Distance(transform.position, _middleBar.transform.position);
