@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
 {
-    static private QuestManager.QuestEnum CAT_QUEST_REF = QuestManager.QuestEnum.MOGGY;
+    static private readonly QuestManager.QuestEnum CAT_QUEST_REF = QuestManager.QuestEnum.MOGGY;
 
     public Dialogue introDialogue;
     public Dialogue inProgressDialogue;

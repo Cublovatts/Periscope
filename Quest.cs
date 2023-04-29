@@ -1,9 +1,9 @@
 public class Quest
 {
-    private QuestManager.QuestEnum questEnum;
+    private readonly QuestManager.QuestEnum questEnum;
     private int currentProgress;
-    private string questName;
-    private string[] questStepDescriptions;
+    private readonly string questName;
+    private readonly string[] questStepDescriptions;
 
     public Quest(QuestManager.QuestEnum questEnum, string questName, string[] questStepDescriptions)
     {

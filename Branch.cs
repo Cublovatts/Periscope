@@ -13,8 +13,6 @@ public class Branch : MonoBehaviour, ITrigger
     private Animator _playerAnimator;
     private MovementScriptBlock movementScriptBlock;
 
-    private Vector3 startPosition;
-
     void Start()
     {
         _rangerQuestTracker = GameObject.FindGameObjectWithTag("RangerQuestTracker").GetComponent<RangerQuestTracker>();

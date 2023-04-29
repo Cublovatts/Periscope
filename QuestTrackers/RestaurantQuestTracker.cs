@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RestaurantQuestTracker : MonoBehaviour
 {
-    static private QuestManager.QuestEnum RESTAURANT_QUEST_REF = QuestManager.QuestEnum.Turn_the_tables;
+    static private readonly QuestManager.QuestEnum RESTAURANT_QUEST_REF = QuestManager.QuestEnum.Turn_the_tables;
 
     [SerializeField]
     private int requiredDeliveries = 5;

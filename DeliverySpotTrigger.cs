@@ -11,7 +11,7 @@ public class DeliverySpotTrigger : MonoBehaviour, ITrigger
 
     public void Trigger()
     {
-        // Animate food being delivered
+        // TODO: Animate food being delivered
         _restaurantQuestTracker.IncrementDeliveries(1);
     }
 }

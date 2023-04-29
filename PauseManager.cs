@@ -22,7 +22,6 @@ public class PauseManager : MonoBehaviour
     private InteractionIndicator[] _interactionIndicators;
 
     private bool isPaused = false;
-    private float speed = 2.0f;
 
     void Start()
     {

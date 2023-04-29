@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DialogueTriggerRanger : MonoBehaviour, ITrigger
 {
-    static private QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
+    static private readonly QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
 
     public Dialogue introDialogue;
     public Dialogue questInProgressDialogue;

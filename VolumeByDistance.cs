@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class VolumeByDistance : MonoBehaviour
@@ -39,7 +37,5 @@ public class VolumeByDistance : MonoBehaviour
         {
             _audioSource.volume = Mathf.Lerp(_maxVolume, _minVolume, (distance - _minDistance) / (_maxDistance - _minDistance));
         }
-
-        
     }
 }

@@ -6,7 +6,7 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
     [SerializeField]
     private Animator _buskerAnimator;
 
-    static private QuestManager.QuestEnum BUSKER_QUEST_REF = QuestManager.QuestEnum.Lord_of_the_dance;
+    static private readonly QuestManager.QuestEnum BUSKER_QUEST_REF = QuestManager.QuestEnum.Lord_of_the_dance;
 
     public Dialogue introDialogue;
     public Dialogue succeededDialogue;
