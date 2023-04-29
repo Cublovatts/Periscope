@@ -8,14 +8,12 @@ public class CurrencyCount : MonoBehaviour
     private int _totalCurrency;
     private Animator _animator;
 
-    // Start is called before the first frame update
     void Start()
     {
         _text = GetComponent<Text>();
         _animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         _text.text = "$" + _totalCurrency.ToString();

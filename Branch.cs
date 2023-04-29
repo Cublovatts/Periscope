@@ -3,15 +3,14 @@ using UnityEngine;
 
 public class Branch : MonoBehaviour, ITrigger
 {
-    static private QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
+    private const QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
 
-    public InteractionIndicator interactionIndicator;
-
+    private InteractionIndicator _interactionIndicator;
     private RangerQuestTracker _rangerQuestTracker;
     private QuestManager _questManager;
     private Animator _animator;
     private Animator _playerAnimator;
-    private MovementScriptBlock movementScriptBlock;
+    private MovementScriptBlock _movementScriptBlock;
 
     void Start()
     {
@@ -19,7 +18,7 @@ public class Branch : MonoBehaviour, ITrigger
         _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
         _animator = gameObject.transform.parent.gameObject.GetComponent<Animator>();
         _playerAnimator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
-        movementScriptBlock = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScriptBlock>();
+        _movementScriptBlock = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScriptBlock>();
     }
 
     public void Update()
@@ -29,11 +28,11 @@ public class Branch : MonoBehaviour, ITrigger
             int questProgress = _questManager.GetQuestProgress(RANGER_QUEST_REF);
             if (questProgress == 1)
             {
-                interactionIndicator.SetAvailable(true);
+                _interactionIndicator.SetAvailable(true);
             }
             else
             {
-                interactionIndicator.SetAvailable(false);
+                _interactionIndicator.SetAvailable(false);
             }
         } catch (System.Exception e)
         {
@@ -53,12 +52,12 @@ public class Branch : MonoBehaviour, ITrigger
 
     IEnumerator DisappearStick()
     {
-        movementScriptBlock.IsAvailable = false;
+        _movementScriptBlock.IsAvailable = false;
         _playerAnimator.Play("PickUp");
         yield return new WaitForSeconds(0.5f);
         _animator.SetBool("IsDisappearing", true);
         yield return new WaitForSeconds(0.5f);
-        movementScriptBlock.IsAvailable = true;
+        _movementScriptBlock.IsAvailable = true;
         gameObject.SetActive(false);
         
     }

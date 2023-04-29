@@ -7,34 +7,32 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField]
-    private Text nameText;
-    [SerializeField]
-    private Text displayLine;
-    private Queue<string> dialogueQueue = new Queue<string>();
-    private Action currentCallback;
-    private MovementScriptBlock movementScriptBlock;
+    private Animator _animator;
+    private Text _nameText;
+    private Text _displayLine;
+    private Queue<string> _dialogueQueue = new Queue<string>();
+    private Action _currentCallback;
+    private MovementScriptBlock _movementScriptBlock;
     private AudioSource _audioSource;
-
-    public Animator animator;
-
-    private bool sentenceFinished = false;
-    private string currentLine;
+    
+    private bool _sentenceFinished = false;
+    private string _currentLine;
 
     void Start()
     {
-        movementScriptBlock = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScriptBlock>();
-        dialogueQueue = new Queue<string>();
+        _movementScriptBlock = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScriptBlock>();
+        _dialogueQueue = new Queue<string>();
         _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && animator.GetBool("IsShowing") && sentenceFinished)
+        if (Input.GetKeyDown(KeyCode.E) && _animator.GetBool("IsShowing") && _sentenceFinished)
         {
-            sentenceFinished = false;
+            _sentenceFinished = false;
             DisplayNextSentence();
         }
-        else if (Input.GetKeyDown(KeyCode.E) && animator.GetBool("IsShowing") && !sentenceFinished)
+        else if (Input.GetKeyDown(KeyCode.E) && _animator.GetBool("IsShowing") && !_sentenceFinished)
         {
             FinishSentence();
         }
@@ -47,33 +45,33 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue, Action callback)
     {
-        movementScriptBlock.IsAvailable = false;
+        _movementScriptBlock.IsAvailable = false;
 
-        currentCallback = callback;
+        _currentCallback = callback;
 
-        animator.SetBool("IsShowing", true);
+        _animator.SetBool("IsShowing", true);
 
-        nameText.text = dialogue.name;
+        _nameText.text = dialogue.name;
 
-        dialogueQueue.Clear();
+        _dialogueQueue.Clear();
 
         foreach(string line in dialogue.lines)
         {
-            dialogueQueue.Enqueue(line);
+            _dialogueQueue.Enqueue(line);
         }
         DisplayNextSentence();
     }
 
     public void DisplayNextSentence()
     {
-        if (dialogueQueue.Count == 0) 
+        if (_dialogueQueue.Count == 0) 
         {
             EndDialogue();
             return;
         }
  
-        string line = dialogueQueue.Dequeue();
-        currentLine = line;
+        string line = _dialogueQueue.Dequeue();
+        _currentLine = line;
 
         StopAllCoroutines();
         StartCoroutine(TypeSentence(line));
@@ -81,21 +79,21 @@ public class DialogueManager : MonoBehaviour
 
     IEnumerator TypeSentence(string line)
     {
-        sentenceFinished = false;
-        displayLine.text = "";
+        _sentenceFinished = false;
+        _displayLine.text = "";
         foreach (char letter in line.ToCharArray())
         {
-            displayLine.text += letter;
+            _displayLine.text += letter;
             yield return new WaitForSeconds(0.05f);
             _audioSource.Play();
         }
-        sentenceFinished = true;
+        _sentenceFinished = true;
     }
 
     public void EndDialogue()
     {
-        animator.SetBool("IsShowing", false);
-        movementScriptBlock.IsAvailable = true;
+        _animator.SetBool("IsShowing", false);
+        _movementScriptBlock.IsAvailable = true;
         StopAllCoroutines();
         StartCoroutine(DelayedCallback());
     }
@@ -103,16 +101,16 @@ public class DialogueManager : MonoBehaviour
     IEnumerator DelayedCallback()
     {
         yield return new WaitForSeconds(0.1f);
-        if (currentCallback != null)
+        if (_currentCallback != null)
         {
-            currentCallback();
+            _currentCallback();
         }
     }
 
     public void FinishSentence()
     {
         StopAllCoroutines(); 
-        displayLine.text = currentLine;
-        sentenceFinished = true;
+        _displayLine.text = _currentLine;
+        _sentenceFinished = true;
     }
 }
