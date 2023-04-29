@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class QuestContainer : MonoBehaviour
 {
+    [Header("Display Symbols")]
     [SerializeField]
     private Sprite completedSprite;
     [SerializeField]
@@ -11,13 +12,11 @@ public class QuestContainer : MonoBehaviour
     private GameObject _titleTextObject;
     private GameObject _descriptionTextObject;
     private GameObject _checkboxImageObject;
-
     private Text _titleText;
     private Text _descriptionText;
     private Image _checkboxImage;
 
     private QuestManager.QuestEnum _questEnum;
-    private string _referenceTitle;
 
     public void InstaniateQuestContainer()
     {
@@ -27,11 +26,6 @@ public class QuestContainer : MonoBehaviour
         _descriptionTextObject = gameObject.transform.GetChild(1).gameObject;
         _checkboxImage = gameObject.transform.GetChild(2).gameObject.GetComponent<Image>();
         _checkboxImageObject = gameObject.transform.GetChild(2).gameObject;
-    }
-
-    public string GetTitle()
-    {
-        return _referenceTitle;
     }
 
     public void SetQuestEnum(QuestManager.QuestEnum questEnum)
@@ -47,7 +41,6 @@ public class QuestContainer : MonoBehaviour
     public void SetTitle(string title)
     {
         _titleText.text = title;
-        _referenceTitle = title;
     }
 
     public void SetDescription(string description)
@@ -68,15 +61,15 @@ public class QuestContainer : MonoBehaviour
 
     public void Hide()
     {
-        _titleTextObject.active = false;
-        _descriptionTextObject.active = false;
-        _checkboxImageObject.active = false;
+        _titleTextObject.SetActive(false);
+        _descriptionTextObject.SetActive(false);
+        _checkboxImageObject.SetActive(false);
     }
 
     public void Show()
     {
-        _titleTextObject.active = true;
-        _descriptionTextObject.active = true;
-        _checkboxImageObject.active = true;
+        _titleTextObject.SetActive(true);
+        _descriptionTextObject.SetActive(true);
+        _checkboxImageObject.SetActive(true);
     }
 }

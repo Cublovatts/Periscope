@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class ScriptedMovement : MonoBehaviour
 {
-    public MovementDestination[] destinations;
-    [SerializeField] private float WALKING_SPEED = 3.0f;
-    [SerializeField] private bool isBlockable;
+    public MovementDestination[] Destinations;
+    [SerializeField] private float _walkingSpeed = 3.0f;
+    [SerializeField] private bool _isBlockable;
 
     private Animator _animator;
     private GameObject _player;
 
-    private MovementDestination currentDestination;
-    private int destinationNumber;
-    private Vector3 newPos;
+    private MovementDestination _currentDestination;
+    private int _destinationNumber;
+    private Vector3 _newPos;
 
     // Start is called before the first frame update
     void Start()
@@ -25,32 +25,32 @@ public class ScriptedMovement : MonoBehaviour
     void Update()
     {
         float dist = Vector3.Distance(gameObject.transform.position, _player.transform.position);
-        if (isBlockable && dist < 3.0f)
+        if (_isBlockable && dist < 3.0f)
         {
             _animator.SetBool("IsMoving", false);
             return;
         }
         _animator.SetBool("IsMoving", true);
 
-        currentDestination = destinations[destinationNumber];
+        _currentDestination = Destinations[_destinationNumber];
 
-        if (currentDestination.IsWarpDestination)
+        if (_currentDestination.IsWarpDestination)
         {
-            transform.position = currentDestination.Destination.transform.position;
+            transform.position = _currentDestination.Destination.transform.position;
         }
 
-        var step = WALKING_SPEED * Time.deltaTime;
-        newPos = Vector3.MoveTowards(transform.position, currentDestination.Destination.transform.position, step);
-        Vector3 inputMovement = newPos - transform.position;
-        transform.position = newPos;
+        var step = _walkingSpeed * Time.deltaTime;
+        _newPos = Vector3.MoveTowards(transform.position, _currentDestination.Destination.transform.position, step);
+        Vector3 inputMovement = _newPos - transform.position;
+        transform.position = _newPos;
 
         // Is destination reached
-        if (Vector3.Distance(transform.position, currentDestination.Destination.transform.position) < 0.001f)
+        if (Vector3.Distance(transform.position, _currentDestination.Destination.transform.position) < 0.001f)
         {
-            destinationNumber++;
-            if (destinationNumber > destinations.Length -1)
+            _destinationNumber++;
+            if (_destinationNumber > Destinations.Length -1)
             {
-                destinationNumber = 0;
+                _destinationNumber = 0;
             }
         }
 

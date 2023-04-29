@@ -4,21 +4,21 @@ using UnityEngine;
 public class QuestTrackerUI : MonoBehaviour
 {
     [SerializeField]
-    private GameObject questContainer;
+    private GameObject _questContainer;
 
-    static private QuestManager.QuestEnum[] questEnums = {
+    private QuestManager.QuestEnum[] questEnums = {
         QuestManager.QuestEnum.Lord_of_the_dance,
         QuestManager.QuestEnum.Pick_up_sticks,
         QuestManager.QuestEnum.Turn_the_tables,
         QuestManager.QuestEnum.MOGGY
     };
-    static private int offset = 150;
-    private List<QuestContainer> questContainers = new List<QuestContainer>();
+    private readonly int _offset = 150;
+    private readonly List<QuestContainer> _questContainers = new List<QuestContainer>();
 
     private QuestManager _questManager;
 
-    private float lastActivated = 0;
-    private bool isShowing = false;
+    private float _lastActivated = 0;
+    private bool _isShowing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,7 @@ public class QuestTrackerUI : MonoBehaviour
         foreach (QuestManager.QuestEnum questEnum in questEnums)
         {
             // Instantiate a new QuestContainer prefab
-            GameObject newQuestContainer = Instantiate(questContainer, gameObject.transform);
+            GameObject newQuestContainer = Instantiate(_questContainer, gameObject.transform);
             newQuestContainer.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, targetHeight);
             // Set the title, description and completeness to false
             QuestContainer questContainerComponent = newQuestContainer.GetComponent<QuestContainer>();
@@ -42,8 +42,8 @@ public class QuestTrackerUI : MonoBehaviour
             questContainerComponent.SetDescription(_questManager.GetQuestCurrentProgressDescription(questEnum));
             questContainerComponent.SetCompleted(false);
             // Add a reference to the QuestContainer script to the array
-            questContainers.Add(questContainerComponent);
-            targetHeight += offset;
+            _questContainers.Add(questContainerComponent);
+            targetHeight += _offset;
         }
         HideQuestTrackers();
     }
@@ -52,17 +52,17 @@ public class QuestTrackerUI : MonoBehaviour
     void Update()
     {
         // Show when a button is pressed
-        if (Input.GetKeyDown(KeyCode.Tab) && !isShowing)
+        if (Input.GetKeyDown(KeyCode.Tab) && !_isShowing)
         {
             ShowQuestTrackers();
         } 
-        else if (Input.GetKeyDown(KeyCode.Tab) && isShowing)
+        else if (Input.GetKeyDown(KeyCode.Tab) && _isShowing)
         {
             HideQuestTrackers();
         }
 
         // Disappear if has been showing for 10 seconds
-        if (Time.time > lastActivated + 10)
+        if (Time.time > _lastActivated + 10)
         {
             HideQuestTrackers();
         }
@@ -70,7 +70,7 @@ public class QuestTrackerUI : MonoBehaviour
 
     public void UpdateQuest(QuestManager.QuestEnum questEnum)
     {
-        foreach (QuestContainer container in questContainers)
+        foreach (QuestContainer container in _questContainers)
         {
             if (container.GetQuestEnum() == questEnum)
             {
@@ -82,20 +82,20 @@ public class QuestTrackerUI : MonoBehaviour
 
     public void HideQuestTrackers()
     {
-        foreach (QuestContainer container in questContainers)
+        foreach (QuestContainer container in _questContainers)
         {
             container.Hide();
         }
-        isShowing = false;
+        _isShowing = false;
     }
 
     public void ShowQuestTrackers()
     {
-        lastActivated = Time.time;
-        foreach (QuestContainer container in questContainers)
+        _lastActivated = Time.time;
+        foreach (QuestContainer container in _questContainers)
         {
             container.Show();
         }
-        isShowing = true;
+        _isShowing = true;
     }
 }

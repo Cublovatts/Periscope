@@ -6,7 +6,7 @@ public class QuestManager : MonoBehaviour
     public delegate void QuestUpdateDelegate(QuestEnum questEnum);
     public event QuestUpdateDelegate QuestUpdate;
 
-    List<Quest> quests = new List<Quest>();
+    private readonly List<Quest> _quests = new List<Quest>();
 
     public enum QuestEnum
     {
@@ -19,15 +19,15 @@ public class QuestManager : MonoBehaviour
     public QuestManager()
     {
         // SETUP QUESTS IN HERE
-        quests.Add(new Quest(QuestEnum.Lord_of_the_dance, "Lord of the dance", new string[] { "Talk to the busker", "Jump on the drum box", "Collect your reward!", "Quest complete" }));
-        quests.Add(new Quest(QuestEnum.Pick_up_sticks, "Pick up sticks", new string[] { "Talk to the park ranger", "Pick up those sticks", "Collect your reward!", "Quest complete" }));
-        quests.Add(new Quest(QuestEnum.Turn_the_tables, "Turn the tables", new string[] { "Talk to the waiter", "Deliver food to tables", "Collect your reward!", "Quest complete" }));
-        quests.Add(new Quest(QuestEnum.MOGGY, "MOGGY", new string[] { "Talk to the cat lady", "Find the old lady's cat", "Collect your reward!", "Quest complete" }));
+        _quests.Add(new Quest(QuestEnum.Lord_of_the_dance, "Lord of the dance", new string[] { "Talk to the busker", "Jump on the drum box", "Collect your reward!", "Quest complete" }));
+        _quests.Add(new Quest(QuestEnum.Pick_up_sticks, "Pick up sticks", new string[] { "Talk to the park ranger", "Pick up those sticks", "Collect your reward!", "Quest complete" }));
+        _quests.Add(new Quest(QuestEnum.Turn_the_tables, "Turn the tables", new string[] { "Talk to the waiter", "Deliver food to tables", "Collect your reward!", "Quest complete" }));
+        _quests.Add(new Quest(QuestEnum.MOGGY, "MOGGY", new string[] { "Talk to the cat lady", "Find the old lady's cat", "Collect your reward!", "Quest complete" }));
     }
 
     public Quest GetQuest(QuestEnum questEnum)
     {
-        foreach (Quest quest in quests)
+        foreach (Quest quest in _quests)
         {
             if (quest.GetQuestEnum() == questEnum) return quest;
         }
@@ -36,7 +36,7 @@ public class QuestManager : MonoBehaviour
 
     public string GetQuestName(QuestEnum questEnum)
     {
-        foreach (Quest quest in quests)
+        foreach (Quest quest in _quests)
         {
             if (quest.GetQuestEnum() == questEnum) return quest.GetName();
         }
@@ -45,7 +45,7 @@ public class QuestManager : MonoBehaviour
 
     public int GetQuestProgress(QuestEnum questEnum)
     {
-        foreach (Quest quest in quests)
+        foreach (Quest quest in _quests)
         {
             if (quest.GetQuestEnum() == questEnum) return quest.GetProgress();
         }
@@ -54,7 +54,7 @@ public class QuestManager : MonoBehaviour
 
     public void SetQuestProgress(QuestEnum questEnum, int progress)
     {
-        foreach (Quest quest in quests)
+        foreach (Quest quest in _quests)
         {
             if (quest.GetQuestEnum() == questEnum)
             {
@@ -68,7 +68,7 @@ public class QuestManager : MonoBehaviour
 
     public string GetQuestCurrentProgressDescription(QuestEnum questEnum)
     {
-        foreach (Quest quest in quests)
+        foreach (Quest quest in _quests)
         {
             if (quest.GetQuestEnum() == questEnum)
             {

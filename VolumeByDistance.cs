@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class VolumeByDistance : MonoBehaviour
 {
+    [Header("Volume Configurations")]
     [SerializeField]
     private float _maxVolume;
     [SerializeField]
@@ -20,7 +21,6 @@ public class VolumeByDistance : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    // Update is called once per frame
     void Update()
     {
         float distance = Vector3.Distance(gameObject.transform.position, _player.transform.position);

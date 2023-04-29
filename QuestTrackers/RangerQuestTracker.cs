@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class RangerQuestTracker : MonoBehaviour
 {
-    static private readonly QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
+    private const QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
 
     private QuestManager _questManager;
 
-    private int sticksToGet = 8;
-    private int sticksGotten = 0;
+    private int _sticksToGet = 8;
+    private int _sticksGotten = 0;
 
     private void Start()
     {
@@ -17,9 +17,9 @@ public class RangerQuestTracker : MonoBehaviour
     [ContextMenu("Add stick")]
     public void AddStick()
     {
-        sticksGotten++;
+        _sticksGotten++;
 
-        if (sticksGotten == sticksToGet)
+        if (_sticksGotten == _sticksToGet)
         {
             try
             {
@@ -35,12 +35,12 @@ public class RangerQuestTracker : MonoBehaviour
 
     public int GetCurrentSticks()
     {
-        return sticksGotten;
+        return _sticksGotten;
     }
 
     public int GetMaxSticks()
     {
-        return sticksToGet;
+        return _sticksToGet;
     }
 
 

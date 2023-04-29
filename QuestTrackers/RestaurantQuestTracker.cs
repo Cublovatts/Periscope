@@ -2,37 +2,37 @@ using UnityEngine;
 
 public class RestaurantQuestTracker : MonoBehaviour
 {
-    static private readonly QuestManager.QuestEnum RESTAURANT_QUEST_REF = QuestManager.QuestEnum.Turn_the_tables;
+    private const QuestManager.QuestEnum RESTAURANT_QUEST_REF = QuestManager.QuestEnum.Turn_the_tables;
 
     [SerializeField]
-    private int requiredDeliveries = 5;
-    private int currentDeliveries = 0;
+    private int _requiredDeliveries = 5;
+    private int _currentDeliveries = 0;
 
-    private PlateSpawner plateSpawner;
-    private QuestManager questManager;
+    private PlateSpawner _plateSpawner;
+    private QuestManager _questManager;
 
     [SerializeField]
-    private GameObject[] deliveryLocations;
+    private GameObject[] _deliveryLocations;
     [SerializeField]
-    private GameObject[] foodOptions;
+    private GameObject[] _foodOptions;
 
     public void Start()
     {
-        plateSpawner = GameObject.Find("PlateSpawner").GetComponent<PlateSpawner>();
-        questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
+        _plateSpawner = GameObject.Find("PlateSpawner").GetComponent<PlateSpawner>();
+        _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
     }
 
     public void IncrementDeliveries(int count)
     {
-        currentDeliveries += count;
-        if (currentDeliveries < requiredDeliveries)
+        _currentDeliveries += count;
+        if (_currentDeliveries < _requiredDeliveries)
         {
-            plateSpawner.SpawnPlate();
+            _plateSpawner.SpawnPlate();
         } else
         {
             try
             {
-                questManager.SetQuestProgress(RESTAURANT_QUEST_REF, 2);
+                _questManager.SetQuestProgress(RESTAURANT_QUEST_REF, 2);
             } catch (System.Exception e)
             {
                 Debug.LogError(e);
@@ -44,23 +44,23 @@ public class RestaurantQuestTracker : MonoBehaviour
 
     public int GetCurrentDeliveries(int count)
     {
-        return currentDeliveries;
+        return _currentDeliveries;
     }
 
     public int GetRequiredDeliveries()
     {
-        return requiredDeliveries;
+        return _requiredDeliveries;
     }
 
     public GameObject GetRandomDeliveryLocation()
     {
-        int index = Random.Range(0, deliveryLocations.Length);
-        return deliveryLocations[index];
+        int index = Random.Range(0, _deliveryLocations.Length);
+        return _deliveryLocations[index];
     }
 
     public GameObject GetRandomFoodOption()
     {
-        int index = Random.Range(0, foodOptions.Length);
-        return foodOptions[index];
+        int index = Random.Range(0, _foodOptions.Length);
+        return _foodOptions[index];
     }
 }
