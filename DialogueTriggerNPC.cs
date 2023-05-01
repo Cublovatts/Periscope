@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class DialogueTriggerNPC : MonoBehaviour, ITrigger
 {
-    [SerializeField]
-    private Dialogue dialogue;
-
     public InteractionIndicator interactionIndicator;
+
+    [SerializeField]
+    private Dialogue _dialogue;
 
     private DialogueManager _dialogueManager;
 
@@ -16,7 +16,7 @@ public class DialogueTriggerNPC : MonoBehaviour, ITrigger
 
     public void Trigger()
     {
-        _dialogueManager.StartDialogue(dialogue, RepeatDialogue);
+        _dialogueManager.StartDialogue(_dialogue, RepeatDialogue);
     }
 
     public void RepeatDialogue()

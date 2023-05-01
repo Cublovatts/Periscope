@@ -1,26 +1,32 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
 {
+    public InteractionIndicator interactionIndicator;
+
     static private readonly QuestManager.QuestEnum RESTAURANT_QUEST_REF = QuestManager.QuestEnum.Turn_the_tables;
 
-    public Dialogue introDialogue;
-    public Dialogue questInProgressDialogue;
-    public Dialogue succeededDialogue;
-    public Dialogue fillerDialogue;
-    public InteractionIndicator interactionIndicator;
-    public CurrencyCount currencyCount;
+    [SerializeField]
+    private Dialogue _introDialogue;
+    [SerializeField]
+    private Dialogue _questInProgressDialogue;
+    [SerializeField]
+    private Dialogue _succeededDialogue;
+    [SerializeField]
+    private Dialogue _fillerDialogue;
 
     private DialogueManager _dialogueManager;
     private QuestManager _questManager;
-
     private PlateSpawner _spawner;
+    private CurrencyCount _currencyCount;
 
     void Start()
     {
         _dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
         _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
         _spawner = GameObject.Find("PlateSpawner").GetComponent<PlateSpawner>();
+        _currencyCount = GameObject.Find("CurrencyCount").GetComponent<CurrencyCount>();
     }
 
     [ContextMenu("TriggerDialogue")]
@@ -32,16 +38,16 @@ public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
             switch (waiterQuestProgress)
             {
                 case 0:
-                    _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
+                    _dialogueManager.StartDialogue(_introDialogue, IntroDialogueUpdate);
                     break;
                 case 1:
-                    _dialogueManager.StartDialogue(questInProgressDialogue, QuestInProgressDialogueUpdate);
+                    _dialogueManager.StartDialogue(_questInProgressDialogue, QuestInProgressDialogueUpdate);
                     break;
                 case 2:
-                    _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate);
+                    _dialogueManager.StartDialogue(_succeededDialogue, SucceededDialogueUpdate);
                     break;
                 case 3:
-                    _dialogueManager.StartDialogue(fillerDialogue, FillerDialogueUpdate);
+                    _dialogueManager.StartDialogue(_fillerDialogue, FillerDialogueUpdate);
                     break;
             }
         } catch (System.Exception e) 
@@ -67,7 +73,7 @@ public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
     {
         _questManager.SetQuestProgress(RESTAURANT_QUEST_REF, 3);
         interactionIndicator.SetAvailable(true);
-        currencyCount.AddCurrency(5);
+        _currencyCount.AddCurrency(5);
     }
 
     public void FillerDialogueUpdate()

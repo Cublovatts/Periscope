@@ -2,11 +2,16 @@ using UnityEngine;
 
 public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
 {
-    public Dialogue IntroDialogue;
-    public Dialogue InProgressDialogue;
-    public Dialogue SucceededDialogue;
-    public Dialogue FillerDialogue;
     public InteractionIndicator InteractionIndicator;
+
+    [SerializeField]
+    private Dialogue _introDialogue;
+    [SerializeField]
+    private Dialogue _inProgressDialogue;
+    [SerializeField]
+    private Dialogue _succeededDialogue;
+    [SerializeField]
+    private Dialogue _fillerDialogue;
 
     static private readonly QuestManager.QuestEnum CAT_QUEST_REF = QuestManager.QuestEnum.MOGGY;
 
@@ -30,16 +35,16 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
             switch (catLadyQuestProgress)
             {
                 case 0:
-                    _dialogueManager.StartDialogue(IntroDialogue, IntroDialogueUpdate);
+                    _dialogueManager.StartDialogue(_introDialogue, IntroDialogueUpdate);
                     break;
                 case 1:
-                    _dialogueManager.StartDialogue(InProgressDialogue, InProgressDialogueUpdate);
+                    _dialogueManager.StartDialogue(_inProgressDialogue, InProgressDialogueUpdate);
                     break;
                 case 2:
-                    _dialogueManager.StartDialogue(SucceededDialogue, SucceededDialogueUpdate);
+                    _dialogueManager.StartDialogue(_succeededDialogue, SucceededDialogueUpdate);
                     break;
                 case 3:
-                    _dialogueManager.StartDialogue(FillerDialogue, FillerDialogueUpdate);
+                    _dialogueManager.StartDialogue(_fillerDialogue, FillerDialogueUpdate);
                     break;
             }
         } catch (System.Exception e)

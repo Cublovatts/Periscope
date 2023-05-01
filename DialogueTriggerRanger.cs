@@ -2,22 +2,28 @@ using UnityEngine;
 
 public class DialogueTriggerRanger : MonoBehaviour, ITrigger
 {
-    static private readonly QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
-
-    public Dialogue introDialogue;
-    public Dialogue questInProgressDialogue;
-    public Dialogue succeededDialogue;
-    public Dialogue fillerDialogue;
     public InteractionIndicator interactionIndicator;
-    public CurrencyCount currencyCount;
+
+    [SerializeField]
+    private Dialogue _introDialogue;
+    [SerializeField]
+    private Dialogue _questInProgressDialogue;
+    [SerializeField]
+    private Dialogue _succeededDialogue;
+    [SerializeField]
+    private Dialogue _fillerDialogue;
+
+    static private readonly QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
 
     private DialogueManager _dialogueManager;
     private QuestManager _questManager;
+    private CurrencyCount _currencyCount;
 
     void Start()
     {
         _dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
         _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
+        _currencyCount = GameObject.Find("CurrencyCount").GetComponent<CurrencyCount>();
     }
 
     [ContextMenu("TriggerDialogue")]
@@ -29,16 +35,16 @@ public class DialogueTriggerRanger : MonoBehaviour, ITrigger
             switch (rangerQuestProgress)
             {
                 case 0:
-                    _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
+                    _dialogueManager.StartDialogue(_introDialogue, IntroDialogueUpdate);
                     break;
                 case 1:
-                    _dialogueManager.StartDialogue(questInProgressDialogue, QuestInProgressUpdate);
+                    _dialogueManager.StartDialogue(_questInProgressDialogue, QuestInProgressUpdate);
                     break;
                 case 2:
-                    _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate);
+                    _dialogueManager.StartDialogue(_succeededDialogue, SucceededDialogueUpdate);
                     break;
                 case 3:
-                    _dialogueManager.StartDialogue(fillerDialogue, FillerDialogueUpdate);
+                    _dialogueManager.StartDialogue(_fillerDialogue, FillerDialogueUpdate);
                     break;
             }
         } catch (System.Exception e)
@@ -78,7 +84,7 @@ public class DialogueTriggerRanger : MonoBehaviour, ITrigger
             Debug.LogError("Couldn't find quest");
         }
         interactionIndicator.SetAvailable(true);
-        currencyCount.AddCurrency(5);
+        _currencyCount.AddCurrency(5);
     }
 
     public void FillerDialogueUpdate()

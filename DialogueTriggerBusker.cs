@@ -1,29 +1,32 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DialogueTriggerBusker : MonoBehaviour, ITrigger
 {
-    public Dialogue IntroDialogue;
-    public Dialogue SucceededDialogue;
-    public Dialogue FillerDialogue;
     public InteractionIndicator InteractionIndicator;
 
     [SerializeField]
-    private Animator _buskerAnimator;
+    private Dialogue _introDialogue;
+    [SerializeField]
+    private Dialogue _succeededDialogue;
+    [SerializeField]
+    private Dialogue _fillerDialogue;  
 
     static private readonly QuestManager.QuestEnum BUSKER_QUEST_REF = QuestManager.QuestEnum.Lord_of_the_dance;
 
     private DialogueManager _dialogueManager;
     private QuestManager _questManager;
     private CurrencyCount _currencyCount;
+    private Animator _buskerAnimator;
 
     private void Start()
     {
         _dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
         _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
         _currencyCount = GameObject.Find("CurrencyCount").GetComponent<CurrencyCount>();
+        _buskerAnimator = GameObject.Find("BuskerCharacter").GetComponent<Animator>();
     }
-
 
     [ContextMenu("TriggerDialogue")]
     public void TriggerDialogue()
@@ -34,13 +37,13 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
             switch (buskerQuestProgress)
             {
                 case 0:
-                    _dialogueManager.StartDialogue(IntroDialogue, IntroDialogueUpdate);
+                    _dialogueManager.StartDialogue(_introDialogue, IntroDialogueUpdate);
                     break;
                 case 2:
-                    _dialogueManager.StartDialogue(SucceededDialogue, SucceededDialogueUpdate);
+                    _dialogueManager.StartDialogue(_succeededDialogue, SucceededDialogueUpdate);
                     break;
                 case 3:
-                    _dialogueManager.StartDialogue(FillerDialogue, FillerDialogueUpdate);
+                    _dialogueManager.StartDialogue(_fillerDialogue, FillerDialogueUpdate);
                     break;
             }
         } catch (Exception e) 
