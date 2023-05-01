@@ -1,22 +1,25 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class FollowPlayer : MonoBehaviour
 {
     public float speed = 1.0f;
-
-    [SerializeField]private GameObject m_Player;
-    [SerializeField]private Vector3 m_cameraOffset;
-
-    private GameObject trackingObject;
     public bool isAvailable = true;
 
+    [SerializeField]
+    private GameObject _player;
+    [FormerlySerializedAs("m_cameraOffset")]
+    [SerializeField]
+    private Vector3 _cameraOffset;
+
+    private GameObject _trackingObject;
+    
     private void Start()
     {
-        trackingObject = m_Player;
+        _trackingObject = _player;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isAvailable)
@@ -27,14 +30,14 @@ public class FollowPlayer : MonoBehaviour
 
     public Vector3 GetTargetObjectPosition()
     {
-        return trackingObject.transform.position + m_cameraOffset;
+        return _trackingObject.transform.position + _cameraOffset;
     }
 
     public IEnumerator MoveCamera(Vector3 targetPosition, float targetSize, float duration)
     {
         Vector3 startPosition = transform.position;
         float startSize = Camera.main.orthographicSize;
-        AnimationCurve curve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f); // Define a smooth animation curve
+        AnimationCurve curve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -55,10 +58,10 @@ public class FollowPlayer : MonoBehaviour
 
     public IEnumerator MoveCameraTracking(GameObject targetObject, float targetSize, float duration)
     {
-        trackingObject = targetObject;
+        _trackingObject = targetObject;
         Vector3 startPosition = transform.position;
         float startSize = Camera.main.orthographicSize;
-        AnimationCurve curve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f); // Define a smooth animation curve
+        AnimationCurve curve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
