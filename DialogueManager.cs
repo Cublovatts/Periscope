@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField]
     private Animator _animator;
     private Text _nameText;
     private Text _displayLine;
@@ -20,6 +19,10 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
+        GameObject dialogueBox = GameObject.Find("DialogueBox");
+        _animator = dialogueBox.GetComponent<Animator>();
+        _nameText = dialogueBox.transform.GetChild(0).GetComponent<Text>();
+        _displayLine = dialogueBox.transform.GetChild(1).GetComponent<Text>();
         _movementScriptBlock = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScriptBlock>();
         _dialogueQueue = new Queue<string>();
         _audioSource = GetComponent<AudioSource>();

@@ -14,7 +14,7 @@ public class PeriscopeEntryTrigger : MonoBehaviour, ITrigger
     {
         _interactionIndicator = GetComponentInChildren<InteractionIndicator>();
         _dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
-        _currencyCount = GameObject.Find("Currency Count").GetComponent<CurrencyCount>();
+        _currencyCount = GameObject.Find("CurrencyCount").GetComponent<CurrencyCount>();
     }
 
     // Update is called once per frame

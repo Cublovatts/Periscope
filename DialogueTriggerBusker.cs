@@ -3,24 +3,25 @@ using UnityEngine;
 
 public class DialogueTriggerBusker : MonoBehaviour, ITrigger
 {
+    public Dialogue IntroDialogue;
+    public Dialogue SucceededDialogue;
+    public Dialogue FillerDialogue;
+    public InteractionIndicator InteractionIndicator;
+
     [SerializeField]
     private Animator _buskerAnimator;
 
     static private readonly QuestManager.QuestEnum BUSKER_QUEST_REF = QuestManager.QuestEnum.Lord_of_the_dance;
 
-    public Dialogue introDialogue;
-    public Dialogue succeededDialogue;
-    public Dialogue fillerDialogue;
-    public InteractionIndicator interactionIndicator;
-    public CurrencyCount currencyCount;
-
     private DialogueManager _dialogueManager;
     private QuestManager _questManager;
+    private CurrencyCount _currencyCount;
 
     private void Start()
     {
         _dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
         _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
+        _currencyCount = GameObject.Find("CurrencyCount").GetComponent<CurrencyCount>();
     }
 
 
@@ -33,13 +34,13 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
             switch (buskerQuestProgress)
             {
                 case 0:
-                    _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
+                    _dialogueManager.StartDialogue(IntroDialogue, IntroDialogueUpdate);
                     break;
                 case 2:
-                    _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate);
+                    _dialogueManager.StartDialogue(SucceededDialogue, SucceededDialogueUpdate);
                     break;
                 case 3:
-                    _dialogueManager.StartDialogue(fillerDialogue, FillerDialogueUpdate);
+                    _dialogueManager.StartDialogue(FillerDialogue, FillerDialogueUpdate);
                     break;
             }
         } catch (Exception e) 
@@ -60,7 +61,7 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
             Debug.LogError("Couldn't find quest");
         }
         
-        interactionIndicator.SetAvailable(false);
+        InteractionIndicator.SetAvailable(false);
         _buskerAnimator.SetBool("IsDrumming", true);
     }
 
@@ -75,14 +76,14 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
             Debug.LogError("Couldn't find quest");
         }
         
-        interactionIndicator.SetAvailable(true);
-        currencyCount.AddCurrency(5);
+        InteractionIndicator.SetAvailable(true);
+        _currencyCount.AddCurrency(5);
         _buskerAnimator.SetBool("IsDrumming", true);
     }
 
     public void FillerDialogueUpdate()
     {
-        interactionIndicator.SetAvailable(true);
+        InteractionIndicator.SetAvailable(true);
         _buskerAnimator.SetBool("IsDrumming", true);
     }
 

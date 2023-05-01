@@ -10,7 +10,7 @@ public class ScriptedMovement : MonoBehaviour
     private GameObject _player;
 
     private MovementDestination _currentDestination;
-    private int _destinationNumber;
+    private int _destinationNumber = 0;
     private Vector3 _newPos;
 
     // Start is called before the first frame update

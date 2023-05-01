@@ -5,6 +5,7 @@ public class Branch : MonoBehaviour, ITrigger
 {
     private const QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
 
+    [SerializeField]
     private InteractionIndicator _interactionIndicator;
     private RangerQuestTracker _rangerQuestTracker;
     private QuestManager _questManager;

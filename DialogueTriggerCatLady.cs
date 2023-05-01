@@ -2,24 +2,23 @@ using UnityEngine;
 
 public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
 {
-    static private readonly QuestManager.QuestEnum CAT_QUEST_REF = QuestManager.QuestEnum.MOGGY;
+    public Dialogue IntroDialogue;
+    public Dialogue InProgressDialogue;
+    public Dialogue SucceededDialogue;
+    public Dialogue FillerDialogue;
+    public InteractionIndicator InteractionIndicator;
 
-    public Dialogue introDialogue;
-    public Dialogue inProgressDialogue;
-    public Dialogue succeededDialogue;
-    public Dialogue fillerDialogue;
-    public InteractionIndicator interactionIndicator;
-    public CurrencyCount currencyCount;
+    static private readonly QuestManager.QuestEnum CAT_QUEST_REF = QuestManager.QuestEnum.MOGGY;
 
     private DialogueManager _dialogueManager;
     private QuestManager _questManager;
-
-    
+    private CurrencyCount _currencyCount;
 
     void Start()
     {
         _dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
         _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
+        _currencyCount = GameObject.Find("CurrencyCount").GetComponent<CurrencyCount>();
     }
 
     [ContextMenu("TriggerDialogue")]
@@ -31,16 +30,16 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
             switch (catLadyQuestProgress)
             {
                 case 0:
-                    _dialogueManager.StartDialogue(introDialogue, IntroDialogueUpdate);
+                    _dialogueManager.StartDialogue(IntroDialogue, IntroDialogueUpdate);
                     break;
                 case 1:
-                    _dialogueManager.StartDialogue(inProgressDialogue, InProgressDialogueUpdate);
+                    _dialogueManager.StartDialogue(InProgressDialogue, InProgressDialogueUpdate);
                     break;
                 case 2:
-                    _dialogueManager.StartDialogue(succeededDialogue, SucceededDialogueUpdate);
+                    _dialogueManager.StartDialogue(SucceededDialogue, SucceededDialogueUpdate);
                     break;
                 case 3:
-                    _dialogueManager.StartDialogue(fillerDialogue, FillerDialogueUpdate);
+                    _dialogueManager.StartDialogue(FillerDialogue, FillerDialogueUpdate);
                     break;
             }
         } catch (System.Exception e)
@@ -61,7 +60,7 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
             Debug.LogError(e);
             Debug.LogError("Couldn't find quest");
         }
-        interactionIndicator.SetAvailable(true);
+        InteractionIndicator.SetAvailable(true);
     }
 
     public void SucceededDialogueUpdate()
@@ -75,18 +74,18 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
             Debug.LogError("Couldn't find quest");
         }
          
-        interactionIndicator.SetAvailable(true);
-        currencyCount.AddCurrency(5);
+        InteractionIndicator.SetAvailable(true);
+        _currencyCount.AddCurrency(5);
     }
 
     public void InProgressDialogueUpdate()
     {
-        interactionIndicator.SetAvailable(true);
+        InteractionIndicator.SetAvailable(true);
     }
 
     public void FillerDialogueUpdate()
     {
-        interactionIndicator.SetAvailable(true);
+        InteractionIndicator.SetAvailable(true);
     }
 
     public void Trigger()

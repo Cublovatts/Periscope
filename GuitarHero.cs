@@ -79,6 +79,7 @@ public class GuitarHero : MonoBehaviour, ITrigger
         onDrums = true;
         // Disable player movement
         _movement.IsAvailable = false;
+        _playerRigidbody.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
         // Set animation to drum idle
         _playerAnimator.SetBool("IsDrumming", true);
         _playerAnimator.Play("Drum_Idle");
@@ -102,7 +103,7 @@ public class GuitarHero : MonoBehaviour, ITrigger
 
         _slider.SetPlaying(true);
 
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(26);
 
         // FINISHING GUITAR HERO
 
@@ -124,6 +125,7 @@ public class GuitarHero : MonoBehaviour, ITrigger
         _player.transform.position = new Vector3(finishPosition.transform.position.x,
                 finishPosition.transform.position.y,
                 finishPosition.transform.position.z);
+        _playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
         _playerAnimator.SetBool("IsDrumming", false);
         _movement.IsAvailable = true;
