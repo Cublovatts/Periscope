@@ -7,13 +7,14 @@ public class GuitarHero : MonoBehaviour, ITrigger
 {
     static private readonly QuestManager.QuestEnum BUSKER_QUEST_REF = QuestManager.QuestEnum.Lord_of_the_dance;
 
-    public InteractionIndicator indicator;
     [SerializeField]
-    private Vector3 positionOffset;
+    private InteractionIndicator _indicator;
     [SerializeField]
-    private Quaternion rotationOffset;
+    private Vector3 _positionOffset;
     [SerializeField]
-    private GameObject finishPosition;
+    private Quaternion _rotationOffset;
+    [SerializeField]
+    private GameObject _finishPosition;
 
     private QuestManager _questManager;
     private SliderScript _slider;
@@ -26,7 +27,7 @@ public class GuitarHero : MonoBehaviour, ITrigger
     private AudioSource _audioSource;
     private InteractionIndicator _buskerInteraction;
 
-    private bool onDrums = false;
+    private bool _onDrums = false;
 
     void Start()
     {
@@ -45,38 +46,35 @@ public class GuitarHero : MonoBehaviour, ITrigger
     // Update is called once per frame
     void Update()
     {
-        if (_questManager.GetQuestProgress(BUSKER_QUEST_REF) == 1 && !onDrums)
+        if (_questManager.GetQuestProgress(BUSKER_QUEST_REF) == 1 && !_onDrums)
         {
-            indicator.SetAvailable(true);
+            _indicator.SetAvailable(true);
         } else
         {
-            indicator.SetAvailable(false);
+            _indicator.SetAvailable(false);
         }
 
-        if (onDrums)
+        if (_onDrums)
         {
             // Put player on drum box
-            _player.transform.position = new Vector3(gameObject.transform.position.x + positionOffset.x, 
-                gameObject.transform.position.y + positionOffset.y, 
-                gameObject.transform.position.z + positionOffset.z);
-            _player.transform.rotation = rotationOffset;
+            _player.transform.SetPositionAndRotation(new Vector3(gameObject.transform.position.x + _positionOffset.x, 
+                gameObject.transform.position.y + _positionOffset.y, 
+                gameObject.transform.position.z + _positionOffset.z), _rotationOffset);
 
             if (Input.GetKeyDown(KeyCode.A))
             {
                 _playerAnimator.Play("Drum_Right");
-                //Process input for guitar hero game
             }
             if (Input.GetKeyDown(KeyCode.D))
             {
                 _playerAnimator.Play("Drum_Left");
-                //Process input for guitar hero game
             }
         }
     }
 
     public void Trigger()
     {
-        onDrums = true;
+        _onDrums = true;
         // Disable player movement
         _movement.IsAvailable = false;
         _playerRigidbody.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
@@ -121,10 +119,10 @@ public class GuitarHero : MonoBehaviour, ITrigger
 
         _slider.SetPlaying(false);
 
-        onDrums = false;
-        _player.transform.position = new Vector3(finishPosition.transform.position.x,
-                finishPosition.transform.position.y,
-                finishPosition.transform.position.z);
+        _onDrums = false;
+        _player.transform.position = new Vector3(_finishPosition.transform.position.x,
+                _finishPosition.transform.position.y,
+                _finishPosition.transform.position.z);
         _playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
         _playerAnimator.SetBool("IsDrumming", false);

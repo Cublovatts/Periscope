@@ -3,10 +3,9 @@ using UnityEngine;
 public class FootstepSoundSwitcher : MonoBehaviour
 {
     [SerializeField]
-    private AudioClip grassFootStep;
+    private AudioClip _grassFootStep;
     [SerializeField]
-    private AudioClip concreteFootStep;
-
+    private AudioClip _concreteFootStep;
     private AudioSource _audioSource;
 
     void Start()
@@ -18,10 +17,10 @@ public class FootstepSoundSwitcher : MonoBehaviour
     {
         if (collision.gameObject.tag == "Grass")
         {
-            _audioSource.clip = grassFootStep;
+            _audioSource.clip = _grassFootStep;
         } else
         {
-            _audioSource.clip = concreteFootStep;
+            _audioSource.clip = _concreteFootStep;
         }
     }
 }

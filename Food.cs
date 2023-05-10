@@ -3,23 +3,17 @@ using UnityEngine;
 
 public class Food : MonoBehaviour, ITrigger
 {
-    private MovementScriptBlock movementScriptBlock;
+    private MovementScriptBlock _movementScriptBlock;
     private Animator _animator;
     private Animator _playerAnimator;
     private RestaurantQuestTracker _restaurantQuestTracker;
 
     void Start()
     {
-        movementScriptBlock = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScriptBlock>();
+        _movementScriptBlock = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScriptBlock>();
         _animator = gameObject.transform.parent.gameObject.GetComponent<Animator>();
         _playerAnimator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
         _restaurantQuestTracker = GameObject.Find("RestaurantQuestManager").GetComponent<RestaurantQuestTracker>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void SetDeliverySpot()
@@ -35,12 +29,12 @@ public class Food : MonoBehaviour, ITrigger
 
     IEnumerator DisappearFood()
     {
-        movementScriptBlock.IsAvailable = false;
+        _movementScriptBlock.IsAvailable = false;
         _playerAnimator.Play("PickUpMid");
         yield return new WaitForSeconds(0.5f);
         _animator.SetBool("IsDisappearing", true);
         yield return new WaitForSeconds(0.5f);
-        movementScriptBlock.IsAvailable = true;
+        _movementScriptBlock.IsAvailable = true;
         gameObject.SetActive(false);
         SetDeliverySpot();
     }
