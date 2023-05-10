@@ -13,7 +13,6 @@ public class ScriptedMovement : MonoBehaviour
     private int _destinationNumber = 0;
     private Vector3 _newPos;
 
-    // Start is called before the first frame update
     void Start()
     {
         _animator = GetComponent<Animator>();
@@ -21,7 +20,6 @@ public class ScriptedMovement : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    // Update is called once per frame
     void Update()
     {
         float dist = Vector3.Distance(gameObject.transform.position, _player.transform.position);

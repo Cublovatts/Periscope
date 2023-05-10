@@ -5,9 +5,9 @@ public class QuestContainer : MonoBehaviour
 {
     [Header("Display Symbols")]
     [SerializeField]
-    private Sprite completedSprite;
+    private Sprite _completedSprite;
     [SerializeField]
-    private Sprite incompleteSprite;
+    private Sprite _incompleteSprite;
 
     private GameObject _titleTextObject;
     private GameObject _descriptionTextObject;
@@ -52,10 +52,10 @@ public class QuestContainer : MonoBehaviour
     {
         if (completed)
         {
-            _checkboxImage.sprite = completedSprite;
+            _checkboxImage.sprite = _completedSprite;
         } else
         {
-            _checkboxImage.sprite = incompleteSprite;
+            _checkboxImage.sprite = _incompleteSprite;
         }
     }
 

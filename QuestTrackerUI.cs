@@ -12,7 +12,7 @@ public class QuestTrackerUI : MonoBehaviour
         QuestManager.QuestEnum.Turn_the_tables,
         QuestManager.QuestEnum.MOGGY
     };
-    private readonly int _offset = 150;
+    private readonly int _verticalDisplayOffset = 150;
     private readonly List<QuestContainer> _questContainers = new List<QuestContainer>();
 
     private QuestManager _questManager;
@@ -20,7 +20,6 @@ public class QuestTrackerUI : MonoBehaviour
     private float _lastActivated = 0;
     private bool _isShowing = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
@@ -43,12 +42,11 @@ public class QuestTrackerUI : MonoBehaviour
             questContainerComponent.SetCompleted(false);
             // Add a reference to the QuestContainer script to the array
             _questContainers.Add(questContainerComponent);
-            targetHeight += _offset;
+            targetHeight += _verticalDisplayOffset;
         }
         HideQuestTrackers();
     }
 
-    // Update is called once per frame
     void Update()
     {
         // Show when a button is pressed

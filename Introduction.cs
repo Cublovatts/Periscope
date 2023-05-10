@@ -7,6 +7,7 @@ public class Introduction : MonoBehaviour
 
     private DialogueManager _dialogueManager;
     private PauseManager _pauseManager;
+    private QuestTrackerUI _questTrackerUI;
 
     private bool _isSent = false;
 
@@ -14,6 +15,7 @@ public class Introduction : MonoBehaviour
     {
         _dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
         _pauseManager = GameObject.FindGameObjectWithTag("PauseManager").GetComponent<PauseManager>();
+        _questTrackerUI = GameObject.Find("QuestTrackers").GetComponent<QuestTrackerUI>();
         PauseManager.onUnpause += OnUnpauseCheck;
     }
 
@@ -21,7 +23,7 @@ public class Introduction : MonoBehaviour
     {
         if (!_isSent && !_pauseManager.GetPaused())
         {
-            _dialogueManager.StartDialogue(_introDialogue, null);
+            _dialogueManager.StartDialogue(_introDialogue, _questTrackerUI.ShowQuestTrackers);
             _isSent = true;
         }
     }

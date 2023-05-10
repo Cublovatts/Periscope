@@ -1,40 +1,40 @@
 public class Quest
 {
-    private readonly QuestManager.QuestEnum questEnum;
-    private int currentProgress;
-    private readonly string questName;
-    private readonly string[] questStepDescriptions;
+    private readonly QuestManager.QuestEnum _questEnum;
+    private int _currentProgress;
+    private readonly string _questName;
+    private readonly string[] _questStepDescriptions;
 
     public Quest(QuestManager.QuestEnum questEnum, string questName, string[] questStepDescriptions)
     {
-        this.questEnum = questEnum;
-        this.questName = questName;
-        this.questStepDescriptions = questStepDescriptions;
-        currentProgress = 0;
+        this._questEnum = questEnum;
+        this._questName = questName;
+        this._questStepDescriptions = questStepDescriptions;
+        _currentProgress = 0;
     }
 
     public QuestManager.QuestEnum GetQuestEnum() 
     { 
-        return questEnum; 
+        return _questEnum; 
     }
 
     public string GetName()
     {
-        return questName;
+        return _questName;
     }
 
     public int GetProgress()
     {
-        return currentProgress;
+        return _currentProgress;
     }
 
     public void SetProgress(int progress)
     {
-        currentProgress = progress;
+        _currentProgress = progress;
     }
 
     public string GetCurrentProgressDescription()
     {
-        return questStepDescriptions[currentProgress];
+        return _questStepDescriptions[_currentProgress];
     }
 }

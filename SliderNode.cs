@@ -20,7 +20,6 @@ public class SliderNode : MonoBehaviour
         _nodeImage = gameObject.GetComponent<Image>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         _resolutionDistanceFactor = Screen.height / 1080f;
@@ -32,15 +31,15 @@ public class SliderNode : MonoBehaviour
             float distance = Vector2.Distance(transform.position, _middleBar.transform.position);
             if (distance < _inPlayDistance && distance > _passDistance)
             {
-                setToFail();
+                SetToFail();
             }
             if (distance < _passDistance && _isLeftNode)
             {
-                setToPass();
+                SetToPass();
             }
             if (distance < _passDistance && !_isLeftNode)
             {
-                setToFail();
+                SetToFail();
             }
         }
         if (Input.GetKeyDown(KeyCode.D) && !_isSet)
@@ -49,26 +48,26 @@ public class SliderNode : MonoBehaviour
             float distance = Vector2.Distance(transform.position, _middleBar.transform.position);
             if (distance < _inPlayDistance && distance > _passDistance)
             {
-                setToFail();
+                SetToFail();
             }
             if (distance < _passDistance && !_isLeftNode)
             {
-                setToPass();
+                SetToPass();
             }
             if (distance < _passDistance && _isLeftNode)
             {
-                setToFail();
+                SetToFail();
             }
         }
     }
 
-    void setToPass()
+    private void SetToPass()
     {
         _isSet = true;
         _nodeImage.color = Color.green;
     }
 
-    void setToFail()
+    private void SetToFail()
     {
         _isSet = true;
         _nodeImage.color = Color.red;
