@@ -1,11 +1,8 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class InteractionIndicator : MonoBehaviour
 {
-    [FormerlySerializedAs("triggerObject")]
     public GameObject TriggerObject;
-    [FormerlySerializedAs("indicatorTargetObject")]
     public GameObject IndicatorTargetObject;
     
     private Camera _camera;

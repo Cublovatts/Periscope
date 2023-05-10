@@ -3,13 +3,14 @@ using UnityEngine;
 public class PeriscopeEntryTrigger : MonoBehaviour, ITrigger
 {
     [SerializeField]
-    private Dialogue periscopeAvailableDialogue;
+    private Dialogue _periscopeAvailableDialogue;
 
     private InteractionIndicator _interactionIndicator;
     private DialogueManager _dialogueManager;
     private CurrencyCount _currencyCount;
 
-    private bool isTriggered = false;
+    private bool _isTriggered = false;
+
     void Start()
     {
         _interactionIndicator = GetComponentInChildren<InteractionIndicator>();
@@ -17,14 +18,13 @@ public class PeriscopeEntryTrigger : MonoBehaviour, ITrigger
         _currencyCount = GameObject.Find("CurrencyCount").GetComponent<CurrencyCount>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (_currencyCount.GetCurrency() >= 20 && !isTriggered)
+        if (_currencyCount.GetCurrency() >= 20 && !_isTriggered)
         {
-            _dialogueManager.StartDialogue(periscopeAvailableDialogue, null);
+            _dialogueManager.StartDialogue(_periscopeAvailableDialogue, null);
             _interactionIndicator.SetAvailable(true);
-            isTriggered = true;
+            _isTriggered = true;
         }
     }
 

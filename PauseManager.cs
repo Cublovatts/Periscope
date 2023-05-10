@@ -8,9 +8,9 @@ public class PauseManager : MonoBehaviour
     public delegate void OnUnpause();
     public static event OnUnpause onUnpause;
 
-    static private float playCameraSize = 12f;
-    static private float pauseCameraSize = 50f;
-    static private Vector3 pausePos = new Vector3(98f, 99f, -175f);
+    static private float _playCameraSize = 12f;
+    static private float _pauseCameraSize = 50f;
+    static private Vector3 _pausePos = new Vector3(98f, 99f, -175f);
 
     private MovementScriptBlock _movement;
     private FollowPlayer _followPlayer;
@@ -21,7 +21,7 @@ public class PauseManager : MonoBehaviour
     private ColorAdjustments _colorAdjustments;
     private InteractionIndicator[] _interactionIndicators;
 
-    private bool isPaused = false;
+    private bool _isPaused = false;
 
     void Start()
     {
@@ -48,18 +48,17 @@ public class PauseManager : MonoBehaviour
         Pause();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPaused)
+            if (_isPaused)
             {
-                isPaused = false;
+                _isPaused = false;
                 UnPause();
             } else
             {
-                isPaused = true;
+                _isPaused = true;
                 Pause();
             }
         }
@@ -73,7 +72,7 @@ public class PauseManager : MonoBehaviour
 
         // stop previous animation and start new one
         StopAllCoroutines();
-        StartCoroutine(_followPlayer.MoveCamera(pausePos, pauseCameraSize, 3.0f));
+        StartCoroutine(_followPlayer.MoveCamera(_pausePos, _pauseCameraSize, 3.0f));
 
         // set pause menu effects
         ClampedFloatParameter intensity = _vignette.intensity;
@@ -98,7 +97,7 @@ public class PauseManager : MonoBehaviour
 
         // stop previous animation and start new one
         StopAllCoroutines();
-        StartCoroutine(_followPlayer.MoveCameraTracking(_player, playCameraSize, 3.0f));
+        StartCoroutine(_followPlayer.MoveCameraTracking(_player, _playCameraSize, 3.0f));
 
         // set pause menu effects
         ClampedFloatParameter intensity = _vignette.intensity;
@@ -123,7 +122,7 @@ public class PauseManager : MonoBehaviour
 
     public bool GetPaused()
     {
-        return isPaused;
+        return _isPaused;
     }
 
     public void ExitGame()
