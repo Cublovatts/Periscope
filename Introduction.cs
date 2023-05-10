@@ -3,12 +3,12 @@ using UnityEngine;
 public class Introduction : MonoBehaviour
 {
     [SerializeField]
-    private Dialogue introDialogue;
+    private Dialogue _introDialogue;
 
     private DialogueManager _dialogueManager;
     private PauseManager _pauseManager;
 
-    private bool isSent = false;
+    private bool _isSent = false;
 
     void Start()
     {
@@ -19,10 +19,10 @@ public class Introduction : MonoBehaviour
 
     public void OnUnpauseCheck()
     {
-        if (!isSent && !_pauseManager.GetPaused())
+        if (!_isSent && !_pauseManager.GetPaused())
         {
-            _dialogueManager.StartDialogue(introDialogue, null);
-            isSent = true;
+            _dialogueManager.StartDialogue(_introDialogue, null);
+            _isSent = true;
         }
     }
 }

@@ -43,7 +43,6 @@ public class GuitarHero : MonoBehaviour, ITrigger
         _buskerInteraction = GameObject.Find("Busker").GetComponentInChildren<InteractionIndicator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (_questManager.GetQuestProgress(BUSKER_QUEST_REF) == 1 && !_onDrums)

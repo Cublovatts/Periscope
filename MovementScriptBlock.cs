@@ -2,14 +2,16 @@ using UnityEngine;
 
 public class MovementScriptBlock : MonoBehaviour
 {
-    [SerializeField] private float RUNNING_SPEED = 3.0f;
-    [SerializeField] private float WALKING_SPEED = 1.0f;
+    public bool IsAvailable = true;
+
+    [SerializeField] 
+    private float RUNNING_SPEED = 3.0f;
+    [SerializeField] 
+    private float WALKING_SPEED = 1.0f;
 
     private Animator _animator;
     private bool IsShifting = false;
     private float rotationAngle = -45f;
-
-    public bool IsAvailable = true;
 
     // Start is called before the first frame update
     void Start()

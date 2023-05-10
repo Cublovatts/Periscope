@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class InteractionIndicator : MonoBehaviour
 {
-    public GameObject triggerObject;
-    public GameObject indicatorTargetObject;
-
+    [FormerlySerializedAs("triggerObject")]
+    public GameObject TriggerObject;
+    [FormerlySerializedAs("indicatorTargetObject")]
+    public GameObject IndicatorTargetObject;
+    
     private Camera _camera;
     private Transform _interactionIndicatorTransform;
     private GameObject _player;
@@ -12,20 +15,19 @@ public class InteractionIndicator : MonoBehaviour
     private Animator _indicatorAnimator;
 
     [SerializeField]
-    private Vector3 indicatorOffset;
-    private bool isIndicatorSubtle = true;
-    public bool isAvailable = true;
-    public bool isShowing = false;
+    private Vector3 _indicatorOffset;
+    private bool _isIndicatorSubtle = true;
+    [SerializeField]
+    private bool _isAvailable = true;
 
-    // Start is called before the first frame update
     void Start()
     {
         _camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         _interactionIndicatorTransform = gameObject.transform;
         _player = GameObject.FindGameObjectWithTag("Player");
-        _trigger = triggerObject.GetComponent<ITrigger>();
+        _trigger = TriggerObject.GetComponent<ITrigger>();
         _indicatorAnimator = gameObject.GetComponent<Animator>();
-        if (isAvailable)
+        if (_isAvailable)
         {
             _indicatorAnimator.SetBool("IsAvailable", true);
         } else
@@ -34,39 +36,37 @@ public class InteractionIndicator : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Vector3 screenPos = _camera.WorldToScreenPoint(indicatorTargetObject.transform.position + indicatorOffset);
-        //screenPos += indicatorOffset;
+        Vector3 screenPos = _camera.WorldToScreenPoint(IndicatorTargetObject.transform.position + _indicatorOffset);
         _interactionIndicatorTransform.SetPositionAndRotation(screenPos, rotation: Quaternion.identity);
 
-        SetAvailable(isAvailable);
+        SetAvailable(_isAvailable);
 
-        float dist = Vector3.Distance(indicatorTargetObject.transform.position, _player.transform.position);
+        float dist = Vector3.Distance(IndicatorTargetObject.transform.position, _player.transform.position);
         if (dist > 5.0f)
         {
             // Show subtle convo prompt
-            if (!isIndicatorSubtle)
+            if (!_isIndicatorSubtle)
             {
-                isIndicatorSubtle = true;
+                _isIndicatorSubtle = true;
                 _indicatorAnimator.SetBool("IsIndicatorSubtle", true);
             }
         }
         if (dist < 5.0f)
         {
             // Show convo prompt
-            if (isIndicatorSubtle)
+            if (_isIndicatorSubtle)
             {
-                isIndicatorSubtle = false;
+                _isIndicatorSubtle = false;
                 _indicatorAnimator.SetBool("IsIndicatorSubtle", false);
             }
 
-            if (Input.GetKeyDown(KeyCode.E) && isAvailable)
+            if (Input.GetKeyDown(KeyCode.E) && _isAvailable)
             {
                 // Trigger action
                 _trigger.Trigger();
-                isAvailable = false;
+                _isAvailable = false;
                 _indicatorAnimator.SetBool("IsAvailable", false);
             }
 
@@ -75,7 +75,7 @@ public class InteractionIndicator : MonoBehaviour
 
     public void SetAvailable(bool available)
     {
-        isAvailable = available;
+        _isAvailable = available;
         _indicatorAnimator.SetBool("IsAvailable", available);
     }
 }
