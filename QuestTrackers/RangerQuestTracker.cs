@@ -11,7 +11,7 @@ public class RangerQuestTracker : MonoBehaviour
 
     private void Start()
     {
-        _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
+        _questManager = QuestManager.instance;
     }
 
     [ContextMenu("Add stick")]
@@ -42,6 +42,4 @@ public class RangerQuestTracker : MonoBehaviour
     {
         return _sticksToGet;
     }
-
-
 }
