@@ -5,10 +5,11 @@ using UnityEngine.UI;
 public class CurrencyCount : MonoBehaviour
 {
     private Text _text;
-    private int _totalCurrency;
     private Animator _animator;
 
-    void Start()
+    private int _totalCurrency;
+
+    void Awake()
     {
         _text = GetComponent<Text>();
         _animator = GetComponent<Animator>();
