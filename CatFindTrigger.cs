@@ -1,19 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CatFindTrigger : MonoBehaviour, ITrigger
 {
-    static private QuestManager.QuestEnum CAT_QUEST_REF = QuestManager.QuestEnum.MOGGY;
+    static private readonly QuestManager.QuestEnum CAT_QUEST_REF = QuestManager.QuestEnum.MOGGY;
 
     private InteractionIndicator _indicator;
     private QuestManager _questManager;
 
-
     void Start()
     {
         _indicator = gameObject.GetComponentInChildren<InteractionIndicator>();
-        _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
+        _questManager = QuestManager.instance;
     }
 
     void Update()
@@ -30,8 +27,6 @@ public class CatFindTrigger : MonoBehaviour, ITrigger
 
     public void Trigger()
     {
-        // Send cat home
-        // Update quest progress
         _questManager.SetQuestProgress(CAT_QUEST_REF, 2);
     }
 }
