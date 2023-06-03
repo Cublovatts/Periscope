@@ -4,6 +4,8 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
 {
     public InteractionIndicator InteractionIndicator;
 
+    static private readonly QuestManager.QuestEnum CAT_QUEST_REF = QuestManager.QuestEnum.MOGGY;
+
     [SerializeField]
     private Dialogue _introDialogue;
     [SerializeField]
@@ -13,16 +15,14 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
     [SerializeField]
     private Dialogue _fillerDialogue;
 
-    static private readonly QuestManager.QuestEnum CAT_QUEST_REF = QuestManager.QuestEnum.MOGGY;
-
     private DialogueManager _dialogueManager;
     private QuestManager _questManager;
     private CurrencyCount _currencyCount;
 
     void Start()
     {
-        _dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
-        _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
+        _dialogueManager = DialogueManager.instance;
+        _questManager = QuestManager.instance;
         _currencyCount = GameObject.Find("CurrencyCount").GetComponent<CurrencyCount>();
     }
 
@@ -51,8 +51,7 @@ public class DialogueTriggerCatLady : MonoBehaviour, ITrigger
         {
             Debug.LogError(e);
             Debug.LogError("Couldn't find quest");
-        }
-        
+        }   
     }
 
     public void IntroDialogueUpdate()
