@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class DialogueTriggerRanger : MonoBehaviour, ITrigger
 {
-    public InteractionIndicator interactionIndicator;
+    public InteractionIndicator InteractionIndicator;
+
+    static private readonly QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
 
     [SerializeField]
     private Dialogue _introDialogue;
@@ -13,16 +15,14 @@ public class DialogueTriggerRanger : MonoBehaviour, ITrigger
     [SerializeField]
     private Dialogue _fillerDialogue;
 
-    static private readonly QuestManager.QuestEnum RANGER_QUEST_REF = QuestManager.QuestEnum.Pick_up_sticks;
-
     private DialogueManager _dialogueManager;
     private QuestManager _questManager;
     private CurrencyCount _currencyCount;
 
     void Start()
     {
-        _dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
-        _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
+        _dialogueManager = DialogueManager.instance;
+        _questManager = QuestManager.instance;
         _currencyCount = GameObject.Find("CurrencyCount").GetComponent<CurrencyCount>();
     }
 
@@ -52,7 +52,6 @@ public class DialogueTriggerRanger : MonoBehaviour, ITrigger
             Debug.LogError(e);
             Debug.LogError("Couldn't find quest");
         }
-        
     }
 
     public void IntroDialogueUpdate()
@@ -65,12 +64,12 @@ public class DialogueTriggerRanger : MonoBehaviour, ITrigger
             Debug.LogError(e);
             Debug.LogError("Couldn't find quest");
         }
-        interactionIndicator.SetAvailable(true);
+        InteractionIndicator.SetAvailable(true);
     }
 
     public void QuestInProgressUpdate()
     {
-        interactionIndicator.SetAvailable(true);
+        InteractionIndicator.SetAvailable(true);
     }
 
     public void SucceededDialogueUpdate()
@@ -83,13 +82,13 @@ public class DialogueTriggerRanger : MonoBehaviour, ITrigger
             Debug.LogError(e);
             Debug.LogError("Couldn't find quest");
         }
-        interactionIndicator.SetAvailable(true);
+        InteractionIndicator.SetAvailable(true);
         _currencyCount.AddCurrency(5);
     }
 
     public void FillerDialogueUpdate()
     {
-        interactionIndicator.SetAvailable(true);
+        InteractionIndicator.SetAvailable(true);
     }
 
     public void Trigger()

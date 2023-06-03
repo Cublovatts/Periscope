@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DialogueTriggerNPC : MonoBehaviour, ITrigger
 {
-    public InteractionIndicator interactionIndicator;
+    public InteractionIndicator InteractionIndicator;
 
     [SerializeField]
     private Dialogue _dialogue;
@@ -21,6 +21,6 @@ public class DialogueTriggerNPC : MonoBehaviour, ITrigger
 
     public void RepeatDialogue()
     {
-        interactionIndicator.SetAvailable(true);
+        InteractionIndicator.SetAvailable(true);
     }
 }
