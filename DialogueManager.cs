@@ -17,6 +17,11 @@ public class DialogueManager : MonoBehaviour
     private bool _sentenceFinished = false;
     private string _currentLine;
 
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
     void Start()
     {
         GameObject dialogueBox = GameObject.Find("DialogueBox");
@@ -24,8 +29,6 @@ public class DialogueManager : MonoBehaviour
         _nameText = dialogueBox.transform.GetChild(0).GetComponent<Text>();
         _displayLine = dialogueBox.transform.GetChild(1).GetComponent<Text>();
         _movementScriptBlock = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScriptBlock>();
-        _dialogueQueue = new Queue<string>();
-        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -49,13 +52,9 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue, Action callback)
     {
         _movementScriptBlock.IsAvailable = false;
-
         _currentCallback = callback;
-
         _animator.SetBool("IsShowing", true);
-
         _nameText.text = dialogue.name;
-
         _dialogueQueue.Clear();
 
         foreach(string line in dialogue.lines)
