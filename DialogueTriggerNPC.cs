@@ -11,7 +11,7 @@ public class DialogueTriggerNPC : MonoBehaviour, ITrigger
 
     void Start()
     {
-        _dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
+        _dialogueManager = DialogueManager.instance;
     }
 
     public void Trigger()
