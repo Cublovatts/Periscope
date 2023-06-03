@@ -8,6 +8,7 @@ public class RestaurantQuestTracker : MonoBehaviour
     private int _requiredDeliveries = 5;
     private int _currentDeliveries = 0;
 
+    [SerializeField]
     private PlateSpawner _plateSpawner;
     private QuestManager _questManager;
 
@@ -18,8 +19,7 @@ public class RestaurantQuestTracker : MonoBehaviour
 
     public void Start()
     {
-        _plateSpawner = GameObject.Find("PlateSpawner").GetComponent<PlateSpawner>();
-        _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
+        _questManager = QuestManager.instance;
     }
 
     public void IncrementDeliveries(int count)
@@ -38,7 +38,6 @@ public class RestaurantQuestTracker : MonoBehaviour
                 Debug.LogError(e);
                 Debug.LogError("Couldn't find quest");
             }
-            
         }
     }
 

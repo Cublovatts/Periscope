@@ -5,8 +5,14 @@ public class QuestManager : MonoBehaviour
 {
     public delegate void QuestUpdateDelegate(QuestEnum questEnum);
     public event QuestUpdateDelegate QuestUpdate;
+    public static QuestManager instance;
 
     private readonly List<Quest> _quests = new List<Quest>();
+
+    public void Awake()
+    {
+        instance = this;
+    }
 
     public enum QuestEnum
     {
