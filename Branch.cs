@@ -9,15 +9,15 @@ public class Branch : MonoBehaviour, ITrigger
     private InteractionIndicator _interactionIndicator;
     private RangerQuestTracker _rangerQuestTracker;
     private QuestManager _questManager;
+    [SerializeField]
     private Animator _animator;
     private Animator _playerAnimator;
     private MovementScriptBlock _movementScriptBlock;
 
     void Start()
     {
-        _rangerQuestTracker = GameObject.FindGameObjectWithTag("RangerQuestTracker").GetComponent<RangerQuestTracker>();
-        _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
-        _animator = gameObject.transform.parent.gameObject.GetComponent<Animator>();
+        _rangerQuestTracker = GameObject.Find("RangerQuestTracker").GetComponent<RangerQuestTracker>();
+        _questManager = QuestManager.instance;
         _playerAnimator = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
         _movementScriptBlock = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScriptBlock>();
     }
@@ -46,9 +46,7 @@ public class Branch : MonoBehaviour, ITrigger
     public void Trigger()
     {
         _rangerQuestTracker.AddStick();
-        // Disable stick
         StartCoroutine(DisappearStick());
-        // Trigger main character pick up stick animation
     }
 
     IEnumerator DisappearStick()
@@ -60,6 +58,5 @@ public class Branch : MonoBehaviour, ITrigger
         yield return new WaitForSeconds(0.5f);
         _movementScriptBlock.IsAvailable = true;
         gameObject.SetActive(false);
-        
     }
 }

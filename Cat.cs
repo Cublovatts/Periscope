@@ -1,28 +1,32 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Cat : MonoBehaviour
 {
     static private QuestManager.QuestEnum CAT_QUEST_REF = QuestManager.QuestEnum.MOGGY;
 
     [SerializeField]
-    private List<GameObject> destinations;
+    private List<GameObject> _destinations;
     [SerializeField]
-    private float RUNNING_SPEED = 2.0f;
+    private float _runningSpeed = 2.0f;
 
     private QuestManager _questManager;
+    [SerializeField]
     private GameObject _catMesh;
     private Animator _catAnimator;
 
-    private int destinationNumber = 0;
-    private bool movementFinished = false;
+    private int _destinationNumber = 0;
+    private bool _movementFinished = false;
+
+    private void Awake()
+    {
+        _catAnimator = GetComponent<Animator>();
+    }
 
     void Start()
     {
-        _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
-        _catMesh = gameObject.transform.GetChild(1).gameObject;
-        _catAnimator = GetComponent<Animator>();
+        _questManager = QuestManager.instance;
     }
 
     void Update()
@@ -43,10 +47,10 @@ public class Cat : MonoBehaviour
             _catAnimator.SetBool("IsRunning", true);
 
             //Loop through locations
-            if (!movementFinished)
+            if (!_movementFinished)
             {
-                GameObject currentDestination = destinations[destinationNumber];
-                var step = RUNNING_SPEED * Time.deltaTime;
+                GameObject currentDestination = _destinations[_destinationNumber];
+                var step = _runningSpeed * Time.deltaTime;
                 if (Vector3.Distance(transform.position, currentDestination.transform.position) > 0.001f)
                 {
                     Vector3 newPos = Vector3.MoveTowards(transform.position, currentDestination.transform.position, step);
@@ -61,10 +65,10 @@ public class Cat : MonoBehaviour
                 // Is destination reached
                 if (Vector3.Distance(transform.position, currentDestination.transform.position) < 0.001f)
                 {
-                    destinationNumber++;
-                    if (destinationNumber > destinations.Count - 1)
+                    _destinationNumber++;
+                    if (_destinationNumber > _destinations.Count - 1)
                     {
-                        movementFinished = true;
+                        _movementFinished = true;
                     }
                 }
             } else
@@ -72,7 +76,6 @@ public class Cat : MonoBehaviour
                 // curl up by feet
                 _catAnimator.SetBool("IsLying", true);
             }
-            
         }
     }
 }
