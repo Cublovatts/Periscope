@@ -6,14 +6,14 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
 {
     public InteractionIndicator InteractionIndicator;
 
+    static private readonly QuestManager.QuestEnum BUSKER_QUEST_REF = QuestManager.QuestEnum.Lord_of_the_dance;
+
     [SerializeField]
     private Dialogue _introDialogue;
     [SerializeField]
     private Dialogue _succeededDialogue;
     [SerializeField]
     private Dialogue _fillerDialogue;  
-
-    static private readonly QuestManager.QuestEnum BUSKER_QUEST_REF = QuestManager.QuestEnum.Lord_of_the_dance;
 
     private DialogueManager _dialogueManager;
     private QuestManager _questManager;
@@ -22,8 +22,8 @@ public class DialogueTriggerBusker : MonoBehaviour, ITrigger
 
     private void Start()
     {
-        _dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
-        _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
+        _dialogueManager = DialogueManager.instance;
+        _questManager = QuestManager.instance;
         _currencyCount = GameObject.Find("CurrencyCount").GetComponent<CurrencyCount>();
         _buskerAnimator = GameObject.Find("BuskerCharacter").GetComponent<Animator>();
     }

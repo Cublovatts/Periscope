@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
+    public static DialogueManager instance;
+
     private Animator _animator;
     private Text _nameText;
     private Text _displayLine;
@@ -19,6 +21,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         _audioSource = GetComponent<AudioSource>();
     }
 
