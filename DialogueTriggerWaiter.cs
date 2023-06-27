@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
 {
-    public InteractionIndicator interactionIndicator;
+    public InteractionIndicator InteractionIndicator;
 
     static private readonly QuestManager.QuestEnum RESTAURANT_QUEST_REF = QuestManager.QuestEnum.Turn_the_tables;
 
@@ -23,8 +22,8 @@ public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
 
     void Start()
     {
-        _dialogueManager = GameObject.FindGameObjectWithTag("DialogueManager").GetComponent<DialogueManager>();
-        _questManager = GameObject.FindGameObjectWithTag("QuestManager").GetComponent<QuestManager>();
+        _dialogueManager = DialogueManager.instance;
+        _questManager = QuestManager.instance;
         _spawner = GameObject.Find("PlateSpawner").GetComponent<PlateSpawner>();
         _currencyCount = GameObject.Find("CurrencyCount").GetComponent<CurrencyCount>();
     }
@@ -60,25 +59,25 @@ public class DialogueTriggerWaiter : MonoBehaviour, ITrigger
     public void IntroDialogueUpdate()
     {
         _questManager.SetQuestProgress(RESTAURANT_QUEST_REF, 1);
-        interactionIndicator.SetAvailable(true);
+        InteractionIndicator.SetAvailable(true);
         _spawner.SpawnPlate();
     }
 
     public void QuestInProgressDialogueUpdate()
     {
-        interactionIndicator.SetAvailable(true);
+        InteractionIndicator.SetAvailable(true);
     }
 
     public void SucceededDialogueUpdate()
     {
         _questManager.SetQuestProgress(RESTAURANT_QUEST_REF, 3);
-        interactionIndicator.SetAvailable(true);
+        InteractionIndicator.SetAvailable(true);
         _currencyCount.AddCurrency(5);
     }
 
     public void FillerDialogueUpdate()
     {
-        interactionIndicator.SetAvailable(true);
+        InteractionIndicator.SetAvailable(true);
     }
 
 

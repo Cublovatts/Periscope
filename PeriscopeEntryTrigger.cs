@@ -1,9 +1,17 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PeriscopeEntryTrigger : MonoBehaviour, ITrigger
 {
     [SerializeField]
     private Dialogue _periscopeAvailableDialogue;
+    [SerializeField]
+    private BlackoutSwitcher _blackoutSwitcher;
+    [SerializeField]
+    private Animator _playerAnimator;
+    [SerializeField]
+    private MusicManager _musicManager;
 
     private InteractionIndicator _interactionIndicator;
     private DialogueManager _dialogueManager;
@@ -28,8 +36,18 @@ public class PeriscopeEntryTrigger : MonoBehaviour, ITrigger
         }
     }
 
+    [ContextMenu("Trigger Entry")]
     public void Trigger()
     {
-        // Open periscope!
+        StartCoroutine(EnterPeriscope());
+    }
+
+    IEnumerator EnterPeriscope()
+    {
+        _blackoutSwitcher.IsBlackedOut = true;
+        _playerAnimator.Play("PickUpMid");
+        _musicManager.TransitionVolumeDown();
+        yield return new WaitForSeconds(3.0f);
+        SceneManager.LoadScene("PeriscopeInterior");
     }
 }

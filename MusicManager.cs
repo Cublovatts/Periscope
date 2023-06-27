@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MusicManager : MonoBehaviour
@@ -31,6 +32,12 @@ public class MusicManager : MonoBehaviour
         }
     }
 
+    [ContextMenu("Fade Out")]
+    public void TransitionVolumeDown()
+    {
+        StartCoroutine(FadeOutVolume());
+    }
+
     public void SetMaxVolume()
     {
         _audioSource.volume = _maxVolume;
@@ -47,5 +54,14 @@ public class MusicManager : MonoBehaviour
         _audioSource.Play();
         _lastTrackStarted = Time.time;
         _currentTrack++;
+    }
+
+    IEnumerator FadeOutVolume()
+    {
+        while (_audioSource.volume > 0)
+        {
+            _audioSource.volume -= Time.deltaTime * 0.01f;
+            yield return null;
+        }
     }
 }
